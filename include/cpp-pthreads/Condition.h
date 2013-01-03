@@ -17,26 +17,43 @@
  *  along with cpp-pthreads.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- *  @file   /home/josh/Codes/cpp/cpp-pthreads/include/cpp-pthreads/Wrapper.h
+ *  @file   /home/josh/Codes/cpp/cpp-pthreads/include/cpp-pthreads/Condition.h
  *
  *  @date   Jan 3, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
  *  @brief  
  */
 
-#ifndef CPP_PTHREADS_WRAPPER_H_
-#define CPP_PTHREADS_WRAPPER_H_
+#ifndef CPP_PTHREADS_CONDITION_H_
+#define CPP_PTHREADS_CONDITION_H_
+
+#include <cpp-pthreads/sizes.h>
+#include <cpp-pthreads/Mutex.h>
 
 namespace pthreads {
 
-template <class T>
-struct Wrapper
+class Condition
 {
-    T    nobj;
-    T&   getNativeRef();
-    T*   getNativePtr();
-};
+    private:
+        char m_data[ sizeOf::cond ];
 
+    public:
+        /// calls pthread_cond_init
+        Condition();
+
+        /// calls pthread_cond_destroy
+        ~Condition();
+
+        /// calls pthread_cond_broadcast
+        int broadcast();
+
+        /// calls pthread_cond_signal
+        int signal();
+
+        /// calls pthread_cond_wait
+        int wait( Mutex& mutex );
+
+};
 
 }
 
@@ -54,4 +71,4 @@ struct Wrapper
 
 
 
-#endif // WRAPPER_H_
+#endif // CONDITION_H_

@@ -95,6 +95,8 @@ int main(int argc, char** argv)
 " *  @author Josh Bialkowski (jbialk@mit.edu)\n"
 " *  @brief  \n"
 " */\n\n"
+"#ifndef CPP_PTHREADS_SIZE_H\n"
+"#define CPP_PTHREADS_SIZE_H\n\n\n"
 "namespace pthreads {\n"
 "namespace sizeOf   {\n"
 "\n"
@@ -119,6 +121,7 @@ WRITE( barrierattr );
 "\n"
 "} // namespace sizeOf\n"
 "} // namespace pthreads\n\n\n"
+"#endif // CPP_PTHREADS_SIZE_H\n"
 ;
 
 

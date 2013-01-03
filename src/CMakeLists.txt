@@ -20,8 +20,9 @@ if( THREADS_FOUND )
     add_library( cpp_pthreads
                     enums.cpp
                     RefCount.cpp
-                    Thread.cpp
-                    Mutex.cpp ) 
+                    Mutex.cpp
+                    Condition.cpp
+                    Thread.cpp ) 
                     
     add_dependencies( cpp_pthreads do_makeSize_h ) 
 

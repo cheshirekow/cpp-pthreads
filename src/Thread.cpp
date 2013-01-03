@@ -27,45 +27,50 @@
 
 #include <cpp-pthreads/Thread.h>
 #include <pthread.h>
+#include <signal.h>
 
 namespace pthreads
 {
 
-Thread::Thread( id_t id ):
-    m_pthread(id)
-{}
 
 Thread::Thread( routine_t start, void* arg )
 {
-    pthread_attr_t x;
-    pthread_t thread_id;
-    pthread_create(&thread_id,0,start,arg);
-    m_pthread = thread_id;
+    pthread_t* thread = reinterpret_cast<pthread_t*>(m_data);
+    pthread_create(thread,0,start,arg);
 }
 
 int Thread::join(void** value_ptr)
 {
-    pthread_t thread_id = m_pthread;
-    return pthread_join(thread_id,value_ptr);
+    pthread_t* thread = reinterpret_cast<pthread_t*>(m_data);
+    return pthread_join(*thread,value_ptr);
 }
 
 int Thread::detach()
 {
-    pthread_t thread_id = m_pthread;
-    return pthread_detach(thread_id);
+    pthread_t* thread = reinterpret_cast<pthread_t*>(m_data);
+    return pthread_detach(*thread);
 }
 
 int Thread::cancel()
 {
-    pthread_t thread_id = m_pthread;
-    return pthread_cancel( thread_id );
+    pthread_t* thread = reinterpret_cast<pthread_t*>(m_data);
+    return pthread_cancel( *thread );
+}
+
+int Thread::kill( int sig )
+{
+    pthread_t* thread = reinterpret_cast<pthread_t*>(m_data);
+    return pthread_kill(*thread,sig);
 }
 
 bool Thread::operator==( const Thread& other )
 {
-    pthread_t thread_a = m_pthread;
-    pthread_t thread_b = other.m_pthread;
-    return pthread_equal(thread_a,thread_b);
+          pthread_t* thread_a =
+                        reinterpret_cast<pthread_t*>(m_data);
+    const pthread_t* thread_b =
+                        reinterpret_cast<const pthread_t*>(other.m_data);
+
+    return pthread_equal(*thread_a,*thread_b);
 }
 
 void Thread::exit( void* value_ptr )
@@ -75,8 +80,10 @@ void Thread::exit( void* value_ptr )
 
 Thread Thread::self()
 {
-    pthread_t thread_id = pthread_self();
-    return Thread(thread_id);
+    Thread thread;
+    pthread_t* thread_id = reinterpret_cast<pthread_t*>(thread.m_data);
+    *thread_id = pthread_self();
+    return thread;
 }
 
 

@@ -24,6 +24,10 @@
  *  @brief  
  */
 
+#ifndef CPP_PTHREADS_SIZE_H
+#define CPP_PTHREADS_SIZE_H
+
+
 namespace pthreads {
 namespace sizeOf   {
 
@@ -45,3 +49,4 @@ const uint barrierattr = 4;
 } // namespace pthreads
 
 
+#endif // CPP_PTHREADS_SIZE_H

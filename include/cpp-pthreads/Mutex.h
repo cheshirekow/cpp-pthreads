@@ -45,6 +45,9 @@ class ScopedLock
         ~ScopedLock();
 };
 
+/// forward declaration
+class Condition;
+
 /// a mutual exclusion lock
 class Mutex
 {
@@ -52,6 +55,8 @@ class Mutex
         char m_data[ sizeOf::mutex ];
 
     public:
+        friend class Condition;
+
         /// calls pthread_mutex_init
         Mutex();
 

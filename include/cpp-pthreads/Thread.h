@@ -27,7 +27,7 @@
 #ifndef CPP_PTHREADS_THREAD_H_
 #define CPP_PTHREADS_THREAD_H_
 
-#include <cpp-pthreads/enums.h>
+#include <cpp-pthreads/sizes.h>
 
 namespace pthreads
 {
@@ -44,13 +44,12 @@ class Thread
 {
     public:
         typedef void *(*routine_t)(void*);
-        typedef unsigned long int id_t;
 
     private:
-        id_t m_pthread;
+        char m_data[ sizeOf::pthread ];
 
-        /// simply assigns the thread id of an existing thread
-        Thread( id_t id );
+        /// simply allocates a thread object, only used by self()
+        Thread( ){}
 
     public:
         /// create a new thread with a function pointer
@@ -78,6 +77,9 @@ class Thread
          *  @see pthread_cancel
          */
         int cancel();
+
+        /// send a signal to the thread
+        int kill( int sig );
 
         /// calls pthread_equal
         bool operator==( const Thread& other );
