@@ -1,26 +1,40 @@
-#find_package(GTKmm REQUIRED)
-#find_package(Boost COMPONENTS iostreams REQUIRED)
-                                                                    
-#include_directories( 
-#   ${Boost_INCLUDE_DIRS}
-#    ${GTKmm_INCLUDE_DIRS} 
-#    )
+find_package( Threads )
+
+if( THREADS_FOUND )
+
+    add_executable( makeSize_h
+                    makeSize_h.cpp )
+                    
+    target_link_libraries( makeSize_h
+                            ${THREADS_LIBRARIES} )
+                            
+    add_custom_command( 
+        OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/../include/cpp-pthreads/sizes.h
+        COMMAND ${CMAKE_CURRENT_BINARY_DIR}/makeSize_h
+                ${CMAKE_CURRENT_SOURCE_DIR}/../include/cpp-pthreads
+        DEPENDS makeSize_h )
+
+    add_custom_target( do_makeSize_h DEPENDS 
+        ${CMAKE_CURRENT_SOURCE_DIR}/../include/cpp-pthreads/sizes.h  )
+         
+    add_library( cpp_pthreads
+                    enums.cpp
+                    RefCount.cpp
+                    Thread.cpp
+                    Mutex.cpp ) 
+                    
+    add_dependencies( cpp_pthreads do_makeSize_h ) 
 
 
-#set(LIBS ${LIBS} 
-#   ${Boost_LIBRARIES}
-#    ${GTKmm_LIBRARIES} 
-#    )
- 
-#add_executable( ${CMAKE_PROJECT_NAME} main.cpp Application.cpp)
 
-#target_link_libraries( ${CMAKE_PROJECT_NAME} ${LIBS})
+else()
 
-#configure_file( 
-#    ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow.glade 
-#    ${CMAKE_CURRENT_BINARY_DIR}/mainwindow.glade COPYONLY )
-    
-#configure_file( 
-#    ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow.xml 
-#    ${CMAKE_CURRENT_BINARY_DIR}/mainwindow.xml COPYONLY )
- 
+set( MISSING "" )
+
+if( NOT (THREADS_FOUND) )
+    set( MISSING "pthreads" )
+endif()
+
+message( WARNING "missing: ${MISSING}" )
+
+endif()
