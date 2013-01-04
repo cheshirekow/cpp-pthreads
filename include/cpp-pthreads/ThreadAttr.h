@@ -43,6 +43,19 @@ extern const Assignment<Thread,InheritSched> SET_INHERIT;
 extern const Assignment<Thread,InheritSched> SET_EXPLICIT;
 extern const Access<Thread,InheritSched>     INHERIT_SCHED;
 
+extern const Assignment<Thread,SchedPolicy> SET_OTHER;
+extern const Assignment<Thread,SchedPolicy> SET_FIFO;
+extern const Assignment<Thread,SchedPolicy> SET_RR;
+extern const Assignment<Thread,SchedPolicy> SET_BATCH;
+extern const Assignment<Thread,SchedPolicy> SET_IDLE;
+extern const Access<Thread,SchedPolicy>     SCHED_POLICY;
+
+extern const Assignment<Thread,Scope> SET_SYSTEM;
+extern const Assignment<Thread,Scope> SET_PROCESS;
+extern const Access<Thread,Scope>     SCOPE;
+
+
+
 template<>
 struct AttrSize<Thread>
 {

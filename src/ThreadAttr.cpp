@@ -75,6 +75,51 @@ int Access<Thread,InheritSched>::get( Attr<Thread>& attr_in, InheritSched& value
     return returnVal;
 }
 
+const Assignment<Thread,SchedPolicy> SET_OTHER(OTHER);
+const Assignment<Thread,SchedPolicy> SET_FIFO(FIFO);
+const Assignment<Thread,SchedPolicy> SET_RR(RR);
+const Assignment<Thread,SchedPolicy> SET_BATCH(BATCH);
+const Assignment<Thread,SchedPolicy> SET_IDLE(IDLE);
+const Access<Thread,SchedPolicy>     SCHED_POLICY;
+
+template <>
+int Assignment<Thread,SchedPolicy>::set( Attr<Thread>& attr_in ) const
+{
+    pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
+    return pthread_attr_setschedpolicy( attr, mapEnum(m_value) );
+}
+
+template <>
+int Access<Thread,SchedPolicy>::get( Attr<Thread>& attr_in, SchedPolicy& value ) const
+{
+    pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
+    int outVal;
+    int returnVal =  pthread_attr_getschedpolicy( attr, &outVal );
+    value = getEnum<SchedPolicy>(outVal);
+    return returnVal;
+}
+
+const Assignment<Thread,Scope> SET_SYSTEM(SYSTEM);
+const Assignment<Thread,Scope> SET_PROCESS(PROCESS);
+const Access<Thread,Scope>     SCOPE;
+
+template <>
+int Assignment<Thread,Scope>::set( Attr<Thread>& attr_in ) const
+{
+    pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
+    return pthread_attr_setscope( attr, mapEnum(m_value) );
+}
+
+template <>
+int Access<Thread,Scope>::get( Attr<Thread>& attr_in, Scope& value ) const
+{
+    pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
+    int outVal;
+    int returnVal =  pthread_attr_getscope( attr, &outVal );
+    value = getEnum<Scope>(outVal);
+    return returnVal;
+}
+
 
 template <>
 int Attr<Thread>::init()
