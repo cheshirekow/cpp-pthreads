@@ -40,6 +40,8 @@ ScopedLock::~ScopedLock(  )
     m_mutex.unlock();
 }
 
+Mutex::Mutex(){}
+
 int Mutex::init()
 {
     pthread_mutex_t* data = reinterpret_cast<pthread_mutex_t*>(m_data);

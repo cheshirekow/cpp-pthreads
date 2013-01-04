@@ -57,6 +57,10 @@ class Mutex
     public:
         friend class Condition;
 
+        /// Mutexes are not copyable, and can only be constructed as an empty
+        /// block of memory garbage
+        explicit Mutex();
+
         /// calls pthread_mutex_init
         int init();
 

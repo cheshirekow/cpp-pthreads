@@ -6,7 +6,7 @@ if( THREADS_FOUND )
                     makeSize_h.cpp )
                     
     target_link_libraries( makeSize_h
-                            ${THREADS_LIBRARIES} )
+                            ${CMAKE_THREAD_LIBS_INIT} )
                             
     add_custom_command( 
         OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/../include/cpp-pthreads/sizes.h
@@ -26,8 +26,10 @@ if( THREADS_FOUND )
                     
     add_dependencies( cpp_pthreads do_makeSize_h ) 
 
-
-
+    install( TARGETS cpp_pthreads 
+                RUNTIME DESTINATION bin
+                LIBRARY DESTINATION lib
+                ARCHIVE DESTINATION lib )
 else()
 
 set( MISSING "" )
