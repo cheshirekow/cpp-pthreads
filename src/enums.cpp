@@ -61,6 +61,11 @@ int SchedPolicyMap[] =
 #else
     -1,
 #endif
+#ifdef SCHED_SPORADIC
+    SCHED_SPORADIC,
+#else
+    -1,
+#endif
 };
 
 int ScopeMap[] =
@@ -124,6 +129,10 @@ template <> SchedPolicy getEnum<SchedPolicy>(int val)
 #ifdef SCHED_IDLE
         case SCHED_IDLE:
             return IDLE;
+#endif
+#ifdef SCHED_SPORADIC
+        case SCHED_SPORADIC:
+            return SPORADIC;
 #endif
 
         default:

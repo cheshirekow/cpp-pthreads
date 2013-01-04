@@ -29,7 +29,7 @@
 
 #include <cpp-pthreads/sizes.h>
 #include <cpp-pthreads/enums.h>
-#include <cpp-pthreads/attr.h>
+#include <cpp-pthreads/Attr.h>
 #include <cpp-pthreads/Thread.h>
 #include <cstdarg>
 
@@ -51,9 +51,6 @@ struct Stack
         size(size)
     {}
 };
-
-
-
 
 extern const Access<Thread,DetachState>     DETACH_STATE;
 extern const Access<Thread,InheritSched>    INHERIT_SCHED;

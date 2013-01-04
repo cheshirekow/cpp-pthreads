@@ -53,11 +53,12 @@ enum InheritSched
 /// determines the order in which they are aquired
 enum SchedPolicy
 {
-    OTHER = 0,
-    FIFO  = 1,
-    RR    = 2,
-    BATCH = 3,
-    IDLE  = 4,
+    OTHER,
+    FIFO,
+    RR,
+    BATCH,
+    IDLE,
+    SPORADIC,
     INVALID_SCHED_POLICY
 };
 
