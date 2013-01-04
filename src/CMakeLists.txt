@@ -23,6 +23,7 @@ if( THREADS_FOUND )
                     Mutex.cpp
                     Condition.cpp
                     ConditionAttr.cpp
+                    Key.cpp
                     Thread.cpp
                     ThreadAttr.cpp ) 
                     
