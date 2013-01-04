@@ -27,14 +27,13 @@
 #ifndef CPP_PTHREADS_THREADATTR_H_
 #define CPP_PTHREADS_THREADATTR_H_
 
-#include <cpp-pthreads/Thread.h>
 #include <cpp-pthreads/sizes.h>
 #include <cpp-pthreads/enums.h>
 #include <cpp-pthreads/attr.h>
+#include <cpp-pthreads/Thread.h>
+
 
 namespace pthreads {
-
-
 
 extern const Assignment<Thread,DetachState> SET_DETACHED;
 extern const Assignment<Thread,DetachState> SET_JOINABLE;
@@ -44,6 +43,11 @@ extern const Assignment<Thread,InheritSched> SET_INHERIT;
 extern const Assignment<Thread,InheritSched> SET_EXPLICIT;
 extern const Access<Thread,InheritSched>     INHERIT_SCHED;
 
+template<>
+struct AttrSize<Thread>
+{
+    static const unsigned int size = sizeOf::attr;
+};
 
 
 

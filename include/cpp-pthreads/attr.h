@@ -27,15 +27,22 @@
 #ifndef CPP_PTHREADS_ATTR_H_
 #define CPP_PTHREADS_ATTR_H_
 
+#include <cpp-pthreads/sizes.h>
 
 namespace pthreads
 {
 
+/// Attributes object for type @p Base
+/**
+ *  For example, Attr<Thread> is the cpp-pthreads object wrapping
+ *  pthread_attr_t
+ */
 template <class Base >              class  Attr;
 template <class Base, typename T>   struct Assignment;
 template <class Base, typename T>   struct Access;
 template <class Base, typename T>   struct Delegate;
 
+template <class Base>               struct AttrSize;
 
 
 template <class Base, typename T>
@@ -61,7 +68,7 @@ template <class Base>
 class Attr
 {
     private:
-        char m_data [ sizeOf::attr ];
+        char m_data [ AttrSize<Base>::size ];
 
     public:
         template <class Base2, typename T> friend class Assignment;

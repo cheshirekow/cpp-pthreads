@@ -27,7 +27,9 @@
 #ifndef CPP_PTHREADS_H_
 #define CPP_PTHREADS_H_
 
-
+#include <cpp-pthreads/sizes.h>
+#include <cpp-pthreads/enums.h>
+#include <cpp-pthreads/attr.h>
 #include <cpp-pthreads/Condition.h>
 #include <cpp-pthreads/Mutex.h>
 #include <cpp-pthreads/Thread.h>
