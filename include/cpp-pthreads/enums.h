@@ -78,6 +78,25 @@ enum PShared
     INVALID_PSHARED
 };
 
+/// Which progocol is used for priority
+enum Protocol
+{
+    PRIO_NONE,
+    PRIO_INHERIT,
+    PRIO_PROTECT,
+    INVALID_PROTOCOL
+};
+
+/// Types of mutexes
+enum Type
+{
+    NORMAL,
+    ERROR_CHECK,
+    RECURSIVE,
+    DEFAULT,
+    INVALID_TYPE
+};
+
 
 
 /// returns pointer to a map from enums to pthread enums (ints)

@@ -34,7 +34,7 @@ namespace pthreads
 
 
 const Access<Condition,Clock>     CLOCK;
-const Access<Condition,PShared>   PSHARED;
+const Access<Condition,PShared>   C_PSHARED;
 
 
 

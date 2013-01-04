@@ -42,7 +42,7 @@ typedef TypeWrap<clockid_t,0>    Clock;
 
 
 extern const Access<Condition,Clock>    CLOCK;
-extern const Access<Condition,PShared>  PSHARED;
+extern const Access<Condition,PShared>  C_PSHARED;
 
 
 template<>

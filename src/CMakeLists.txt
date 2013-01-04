@@ -20,10 +20,11 @@ if( THREADS_FOUND )
     add_library( cpp_pthreads
                     enums.cpp
                     RefCount.cpp
-                    Mutex.cpp
                     Condition.cpp
                     ConditionAttr.cpp
                     Key.cpp
+                    Mutex.cpp
+                    MutexAttr.cpp
                     Thread.cpp
                     ThreadAttr.cpp ) 
                     

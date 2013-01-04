@@ -17,25 +17,47 @@
  *  along with cpp-pthreads.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- *  @file   /home/josh/Codes/cpp/cpp-pthreads/include/cpp-pthreads.h
+ *  @file   /home/josh/Codes/cpp/cpp-pthreads/include/cpp-pthreads/MutexAttr.h
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
  *  @brief  
  */
 
-#ifndef CPP_PTHREADS_H_
-#define CPP_PTHREADS_H_
+#ifndef CPP_PTHREADS_MUTEXATTR_H_
+#define CPP_PTHREADS_MUTEXATTR_H_
+
+
 
 #include <cpp-pthreads/sizes.h>
 #include <cpp-pthreads/enums.h>
 #include <cpp-pthreads/Attr.h>
-#include <cpp-pthreads/Condition.h>
-#include <cpp-pthreads/ConditionAttr.h>
 #include <cpp-pthreads/Mutex.h>
-#include <cpp-pthreads/MutexAttr.h>
-#include <cpp-pthreads/Thread.h>
-#include <cpp-pthreads/ThreadAttr.h>
+#include <cstdarg>
+#include <ctime>
+
+
+namespace pthreads {
+
+typedef TypeWrap<int,0> PriorityCeiling;
+
+extern const Access<Mutex,PriorityCeiling>  PRIORITY_CEILING;
+extern const Access<Mutex,Protocol>         PROTOCOL;
+extern const Access<Mutex,PShared>          M_PSHARED;
+extern const Access<Mutex,Type>             TYPE;
+
+
+template<>
+struct AttrSize<Mutex>
+{
+    static const unsigned int size = sizeOf::mutexattr;
+};
+
+
+
+
+
+}
 
 
 
@@ -50,5 +72,4 @@
 
 
 
-
-#endif // CPP_PTHREADS_H_
+#endif // MUTEXATTR_H_

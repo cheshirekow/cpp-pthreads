@@ -80,11 +80,28 @@ int PSharedMap[] =
     PTHREAD_PROCESS_PRIVATE
 };
 
+int ProtocolMap[] =
+{
+    PTHREAD_PRIO_NONE,
+    PTHREAD_PRIO_INHERIT,
+    PTHREAD_PRIO_PROTECT
+};
+
+int TypeMap[] =
+{
+    PTHREAD_MUTEX_NORMAL,
+    PTHREAD_MUTEX_ERRORCHECK,
+    PTHREAD_MUTEX_RECURSIVE,
+    PTHREAD_MUTEX_DEFAULT
+};
+
 DEFINEMAP( DetachState );
 DEFINEMAP( InheritSched );
 DEFINEMAP( SchedPolicy );
 DEFINEMAP( Scope );
 DEFINEMAP( PShared );
+DEFINEMAP( Protocol );
+DEFINEMAP( Type )
 
 template <> DetachState getEnum<DetachState>(int val)
 {
@@ -174,6 +191,47 @@ template <> PShared getEnum<PShared>(int val)
 
         default:
             return INVALID_PSHARED;
+    }
+}
+
+template <> Protocol getEnum<Protocol>(int val)
+{
+    switch(val)
+    {
+        case PTHREAD_PRIO_NONE:
+            return PRIO_NONE;
+
+        case PTHREAD_PRIO_INHERIT:
+            return PRIO_INHERIT;
+
+        case PTHREAD_PRIO_PROTECT:
+            return PRIO_PROTECT;
+
+        default:
+            return INVALID_PROTOCOL;
+    }
+}
+
+template <> Type getEnum<Type>(int val)
+{
+    switch(val)
+    {
+        case PTHREAD_MUTEX_NORMAL:
+            return NORMAL;
+
+        case PTHREAD_MUTEX_ERRORCHECK:
+            return ERROR_CHECK;
+
+        case PTHREAD_MUTEX_RECURSIVE:
+            return RECURSIVE;
+
+#if PTHREAD_MUTEX_NORMAL != PTHREAD_MUTEX_DEFAULT
+        case PTHREAD_MUTEX_DEFAULT:
+            return DEFAULT;
+#endif
+
+        default:
+            return INVALID_TYPE;
     }
 }
 
