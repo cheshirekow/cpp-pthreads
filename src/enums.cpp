@@ -74,10 +74,17 @@ int ScopeMap[] =
     PTHREAD_SCOPE_PROCESS
 };
 
+int PSharedMap[] =
+{
+    PTHREAD_PROCESS_SHARED,
+    PTHREAD_PROCESS_PRIVATE
+};
+
 DEFINEMAP( DetachState );
 DEFINEMAP( InheritSched );
 DEFINEMAP( SchedPolicy );
 DEFINEMAP( Scope );
+DEFINEMAP( PShared );
 
 template <> DetachState getEnum<DetachState>(int val)
 {
@@ -152,6 +159,21 @@ template <> Scope getEnum<Scope>(int val)
 
         default:
             return INVALID_SCOPE;
+    }
+}
+
+template <> PShared getEnum<PShared>(int val)
+{
+    switch(val)
+    {
+        case PTHREAD_PROCESS_SHARED:
+            return SHARED;
+
+        case PTHREAD_PROCESS_PRIVATE:
+            return PRIVATE;
+
+        default:
+            return INVALID_PSHARED;
     }
 }
 

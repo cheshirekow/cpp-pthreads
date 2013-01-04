@@ -70,6 +70,14 @@ enum Scope
     INVALID_SCOPE
 };
 
+/// indicates whether or not a condition variable is shared accross processes
+enum PShared
+{
+    SHARED,
+    PRIVATE,
+    INVALID_PSHARED
+};
+
 
 
 /// returns pointer to a map from enums to pthread enums (ints)

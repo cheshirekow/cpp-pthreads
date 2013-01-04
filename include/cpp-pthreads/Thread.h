@@ -28,7 +28,6 @@
 #define CPP_PTHREADS_THREAD_H_
 
 #include <cpp-pthreads/sizes.h>
-#include <sched.h>
 
 namespace pthreads
 {
@@ -46,7 +45,6 @@ class Thread
 {
     public:
         typedef void *(*routine_t)(void*);
-        class Attr;
 
     private:
         char m_data[ sizeOf::pthread ];

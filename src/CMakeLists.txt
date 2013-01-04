@@ -22,6 +22,7 @@ if( THREADS_FOUND )
                     RefCount.cpp
                     Mutex.cpp
                     Condition.cpp
+                    ConditionAttr.cpp
                     Thread.cpp
                     ThreadAttr.cpp ) 
                     
