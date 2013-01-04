@@ -20,6 +20,8 @@ if( THREADS_FOUND )
     add_library( cpp_pthreads
                     enums.cpp
                     RefCount.cpp
+                    Barrier.cpp
+                    BarrierAttr.cpp
                     Condition.cpp
                     ConditionAttr.cpp
                     Key.cpp
