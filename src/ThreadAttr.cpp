@@ -31,17 +31,18 @@
 namespace pthreads
 {
 
-const DetachStateAssignment SET_DETACHED(DETACHED);
-const DetachStateAssignment SET_JOINABLE(JOINABLE);
-const DetachStateAccess     DETACH_STATE;
 
-int DetachStateAssignment::set( Thread::Attr& attr_in ) const
+const Assignment<DetachState> SET_DETACHED(DETACHED);
+const Assignment<DetachState> SET_JOINABLE(JOINABLE);
+const Access<DetachState>     DETACH_STATE;
+
+int Assignment<DetachState>::set( Thread::Attr& attr_in ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     return pthread_attr_setdetachstate( attr, mapEnum(m_value) );
 }
 
-int DetachStateAccess::get( Thread::Attr& attr_in, DetachState& value ) const
+int Access<DetachState>::get( Thread::Attr& attr_in, DetachState& value ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     int outVal;
@@ -51,17 +52,17 @@ int DetachStateAccess::get( Thread::Attr& attr_in, DetachState& value ) const
 }
 
 
-const InheritSchedAssignment SET_INHERIT(INHERIT);
-const InheritSchedAssignment SET_EXPLICIT(EXPLICIT);
-const InheritSchedAccess     INHERIT_SCHED;
+const Assignment<InheritSched> SET_INHERIT(INHERIT);
+const Assignment<InheritSched> SET_EXPLICIT(EXPLICIT);
+const Access<InheritSched>     INHERIT_SCHED;
 
-int InheritSchedAssignment::set( Thread::Attr& attr_in ) const
+int Assignment<InheritSched>::set( Thread::Attr& attr_in ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     return pthread_attr_setinheritsched( attr, mapEnum(m_value) );
 }
 
-int InheritSchedAccess::get( Thread::Attr& attr_in, InheritSched& value ) const
+int Access<InheritSched>::get( Thread::Attr& attr_in, InheritSched& value ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     int outVal;
