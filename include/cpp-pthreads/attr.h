@@ -148,6 +148,34 @@ struct Delegate
 };
 
 
+template <typename T, unsigned int ID>
+struct TypeWrap
+{
+    T m_data;
+
+    TypeWrap( const T& data ):
+        m_data(data)
+    {
+
+    }
+
+    TypeWrap<T,ID>& operator=( const T& data )
+    {
+        m_data = data;
+        return *this;
+    }
+
+    operator T&()
+    {
+        return m_data;
+    }
+
+    operator const T&() const
+    {
+        return m_data;
+    }
+
+};
 
 
 

@@ -36,32 +36,38 @@
 
 namespace pthreads {
 
-extern const Access<Thread,DetachState>     DETACH_STATE;
-extern const Access<Thread,InheritSched>    INHERIT_SCHED;
-extern const Access<Thread,SchedPolicy>     SCHED_POLICY;
-extern const Access<Thread,Scope>           SCOPE;
-
-
 
 struct GuardSize
 {
-    std::size_t m_size;
+    std::size_t m_data;
 
-    GuardSize( std::size_t size ):
-        m_size(size)
+    GuardSize( const std::size_t& data ):
+        m_data(data)
     {}
 
-    GuardSize& operator=( std::size_t size )
+    GuardSize& operator=( std::size_t data )
     {
-        m_size = size;
+        m_data = data;
         return *this;
     }
 
     operator std::size_t&()
     {
-        return m_size;
+        return m_data;
+    }
+
+    operator const std::size_t&() const
+    {
+        return m_data;
     }
 };
+
+
+extern const Access<Thread,DetachState>     DETACH_STATE;
+extern const Access<Thread,InheritSched>    INHERIT_SCHED;
+extern const Access<Thread,SchedPolicy>     SCHED_POLICY;
+extern const Access<Thread,Scope>           SCOPE;
+extern const Access<Thread,GuardSize>       GUARD_SIZE;
 
 template<>
 struct AttrSize<Thread>

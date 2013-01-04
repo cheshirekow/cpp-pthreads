@@ -31,8 +31,15 @@
 namespace pthreads
 {
 
+const Access<Thread,DetachState>    DETACH_STATE;
+const Access<Thread,InheritSched>   INHERIT_SCHED;
+const Access<Thread,SchedPolicy>    SCHED_POLICY;
+const Access<Thread,Scope>          SCOPE;
+const Access<Thread,GuardSize>      GUARD_SIZE;
 
-const Access<Thread,DetachState>     DETACH_STATE;
+
+
+
 
 template <>
 int Assignment<Thread,DetachState>::set( Attr<Thread>& attr_in ) const
@@ -52,7 +59,8 @@ int Access<Thread,DetachState>::get( Attr<Thread>& attr_in, DetachState& value )
 }
 
 
-const Access<Thread,InheritSched>     INHERIT_SCHED;
+
+
 
 template <>
 int Assignment<Thread,InheritSched>::set( Attr<Thread>& attr_in ) const
@@ -60,6 +68,9 @@ int Assignment<Thread,InheritSched>::set( Attr<Thread>& attr_in ) const
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     return pthread_attr_setinheritsched( attr, mapEnum(m_value) );
 }
+
+
+
 
 template <>
 int Access<Thread,InheritSched>::get( Attr<Thread>& attr_in, InheritSched& value ) const
@@ -71,7 +82,7 @@ int Access<Thread,InheritSched>::get( Attr<Thread>& attr_in, InheritSched& value
     return returnVal;
 }
 
-const Access<Thread,SchedPolicy>     SCHED_POLICY;
+
 
 template <>
 int Assignment<Thread,SchedPolicy>::set( Attr<Thread>& attr_in ) const
@@ -90,7 +101,9 @@ int Access<Thread,SchedPolicy>::get( Attr<Thread>& attr_in, SchedPolicy& value )
     return returnVal;
 }
 
-const Access<Thread,Scope>     SCOPE;
+
+
+
 
 template <>
 int Assignment<Thread,Scope>::set( Attr<Thread>& attr_in ) const
@@ -108,6 +121,29 @@ int Access<Thread,Scope>::get( Attr<Thread>& attr_in, Scope& value ) const
     value = getEnum<Scope>(outVal);
     return returnVal;
 }
+
+
+
+
+template <>
+int Assignment<Thread,GuardSize>::set( Attr<Thread>& attr_in ) const
+{
+    pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
+    return pthread_attr_setguardsize( attr, m_value );
+}
+
+template <>
+int Access<Thread,GuardSize>::get( Attr<Thread>& attr_in, GuardSize& value ) const
+{
+    pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
+    size_t outVal;
+    int returnVal =  pthread_attr_getguardsize( attr, &outVal );
+    value = outVal;
+    return returnVal;
+}
+
+
+
 
 
 template <>
