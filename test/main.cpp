@@ -55,8 +55,8 @@ int main(int argc, char** argv)
 
 
     Attr<Thread> attr;
-    attr.set( SET_DETACHED );
-    attr << SET_JOINABLE;
+    attr << JOINABLE;
+    attr.set( JOINABLE );
 
     DetachState detach;
     InheritSched inherit;

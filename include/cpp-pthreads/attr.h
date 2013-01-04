@@ -49,7 +49,7 @@ template <class Base, typename T>
 struct Assignment
 {
     T  m_value;
-    Assignment( T value ):
+    Assignment( const T& value ):
         m_value(value)
     {}
 
@@ -83,15 +83,17 @@ class Attr
 
         /// safe assignment
         template <typename T>
-        int set( const Assignment<Base,T>& assignment )
+        int set( const T& value)
         {
+            Assignment<Base,T> assignment(value);
             return assignment.set(*this);
         }
 
         /// assign an attribute
         template <typename T>
-        int operator=( const Assignment<Base,T>& assignment )
+        int operator=( const T& value )
         {
+            Assignment<Base,T> assignment(value);
             return assignment.set(*this);
         }
 
@@ -104,8 +106,9 @@ class Attr
 
         /// stream assignment, unsafe, ignores error values returned
         template <typename T>
-        Attr<Base>& operator << ( const Assignment<Base,T>& assignment )
+        Attr<Base>& operator << ( const T& value )
         {
+            Assignment<Base,T> assignment(value);
             assignment.set(*this);
             return *this;
         }
@@ -140,8 +143,7 @@ struct Delegate
 
     int operator=( T value )
     {
-        Assignment<Base,T> assignment(value);
-        return m_attr.set(assignment);
+        return m_attr.set(value);
     }
 };
 

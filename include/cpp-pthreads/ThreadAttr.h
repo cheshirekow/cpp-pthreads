@@ -31,30 +31,37 @@
 #include <cpp-pthreads/enums.h>
 #include <cpp-pthreads/attr.h>
 #include <cpp-pthreads/Thread.h>
+#include <cstdarg>
 
 
 namespace pthreads {
 
-extern const Assignment<Thread,DetachState> SET_DETACHED;
-extern const Assignment<Thread,DetachState> SET_JOINABLE;
 extern const Access<Thread,DetachState>     DETACH_STATE;
-
-extern const Assignment<Thread,InheritSched> SET_INHERIT;
-extern const Assignment<Thread,InheritSched> SET_EXPLICIT;
-extern const Access<Thread,InheritSched>     INHERIT_SCHED;
-
-extern const Assignment<Thread,SchedPolicy> SET_OTHER;
-extern const Assignment<Thread,SchedPolicy> SET_FIFO;
-extern const Assignment<Thread,SchedPolicy> SET_RR;
-extern const Assignment<Thread,SchedPolicy> SET_BATCH;
-extern const Assignment<Thread,SchedPolicy> SET_IDLE;
+extern const Access<Thread,InheritSched>    INHERIT_SCHED;
 extern const Access<Thread,SchedPolicy>     SCHED_POLICY;
-
-extern const Assignment<Thread,Scope> SET_SYSTEM;
-extern const Assignment<Thread,Scope> SET_PROCESS;
-extern const Access<Thread,Scope>     SCOPE;
+extern const Access<Thread,Scope>           SCOPE;
 
 
+
+struct GuardSize
+{
+    std::size_t m_size;
+
+    GuardSize( std::size_t size ):
+        m_size(size)
+    {}
+
+    GuardSize& operator=( std::size_t size )
+    {
+        m_size = size;
+        return *this;
+    }
+
+    operator std::size_t&()
+    {
+        return m_size;
+    }
+};
 
 template<>
 struct AttrSize<Thread>

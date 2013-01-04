@@ -32,8 +32,6 @@ namespace pthreads
 {
 
 
-const Assignment<Thread,DetachState> SET_DETACHED(DETACHED);
-const Assignment<Thread,DetachState> SET_JOINABLE(JOINABLE);
 const Access<Thread,DetachState>     DETACH_STATE;
 
 template <>
@@ -54,8 +52,6 @@ int Access<Thread,DetachState>::get( Attr<Thread>& attr_in, DetachState& value )
 }
 
 
-const Assignment<Thread,InheritSched> SET_INHERIT(INHERIT);
-const Assignment<Thread,InheritSched> SET_EXPLICIT(EXPLICIT);
 const Access<Thread,InheritSched>     INHERIT_SCHED;
 
 template <>
@@ -75,11 +71,6 @@ int Access<Thread,InheritSched>::get( Attr<Thread>& attr_in, InheritSched& value
     return returnVal;
 }
 
-const Assignment<Thread,SchedPolicy> SET_OTHER(OTHER);
-const Assignment<Thread,SchedPolicy> SET_FIFO(FIFO);
-const Assignment<Thread,SchedPolicy> SET_RR(RR);
-const Assignment<Thread,SchedPolicy> SET_BATCH(BATCH);
-const Assignment<Thread,SchedPolicy> SET_IDLE(IDLE);
 const Access<Thread,SchedPolicy>     SCHED_POLICY;
 
 template <>
@@ -99,8 +90,6 @@ int Access<Thread,SchedPolicy>::get( Attr<Thread>& attr_in, SchedPolicy& value )
     return returnVal;
 }
 
-const Assignment<Thread,Scope> SET_SYSTEM(SYSTEM);
-const Assignment<Thread,Scope> SET_PROCESS(PROCESS);
 const Access<Thread,Scope>     SCOPE;
 
 template <>
