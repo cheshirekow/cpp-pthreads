@@ -145,6 +145,48 @@ int Access<Thread,GuardSize>::get( Attr<Thread>& attr_in, GuardSize& value ) con
 
 
 
+template <>
+int Assignment<Thread,Stack>::set( Attr<Thread>& attr_in ) const
+{
+    pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
+    return pthread_attr_setstack( attr, m_value.addr, m_value.size );
+}
+
+template <>
+int Access<Thread,Stack>::get( Attr<Thread>& attr_in, Stack& value ) const
+{
+    pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
+    void* outVal;
+    size_t outVal2;
+    int returnVal =  pthread_attr_getstack( attr, &outVal, &outVal2 );
+    value.addr = outVal;
+    value.size = outVal2;
+    return returnVal;
+}
+
+
+
+
+template <>
+int Assignment<Thread,StackSize>::set( Attr<Thread>& attr_in ) const
+{
+    pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
+    return pthread_attr_setstacksize( attr, m_value );
+}
+
+template <>
+int Access<Thread,StackSize>::get( Attr<Thread>& attr_in, StackSize& value ) const
+{
+    pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
+    size_t outVal;
+    int returnVal =  pthread_attr_getstacksize( attr, &outVal );
+    value = outVal;
+    return returnVal;
+}
+
+
+
+
 
 template <>
 int Attr<Thread>::init()

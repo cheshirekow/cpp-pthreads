@@ -39,6 +39,20 @@ namespace pthreads {
 
 
 typedef TypeWrap<std::size_t,0>   GuardSize;
+typedef TypeWrap<std::size_t,1>   StackSize;
+
+struct Stack
+{
+    void*       addr;
+    std::size_t size;
+
+    Stack( void* addr=0, std::size_t size=0):
+        addr(addr),
+        size(size)
+    {}
+};
+
+
 
 
 extern const Access<Thread,DetachState>     DETACH_STATE;
@@ -46,6 +60,8 @@ extern const Access<Thread,InheritSched>    INHERIT_SCHED;
 extern const Access<Thread,SchedPolicy>     SCHED_POLICY;
 extern const Access<Thread,Scope>           SCOPE;
 extern const Access<Thread,GuardSize>       GUARD_SIZE;
+extern const Access<Thread,Stack>           STACK_ADDR;
+extern const Access<Thread,StackSize>       STACK_SIZE;
 
 template<>
 struct AttrSize<Thread>
