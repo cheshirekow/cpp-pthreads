@@ -63,6 +63,11 @@ struct Access
     int get( Attr<Base>& attr, T& value ) const;
 };
 
+template <class T>
+struct Friendly
+{
+    typedef T type;
+};
 
 template <class Base>
 class Attr
@@ -74,6 +79,7 @@ class Attr
         template <class Base2, typename T> friend class Assignment;
         template <class Base2, typename T> friend class Access;
         template <class Base2, typename T> friend class Delegate;
+        friend class Friendly<Base>::type;
 
         /// initialize the object
         int init();

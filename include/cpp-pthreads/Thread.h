@@ -28,6 +28,7 @@
 #define CPP_PTHREADS_THREAD_H_
 
 #include <cpp-pthreads/sizes.h>
+#include <cpp-pthreads/Attr.h>
 
 namespace pthreads
 {
@@ -51,7 +52,10 @@ class Thread
 
     public:
         /// start a new thread storing the id in m_data
-        int launch( routine_t start, void* arg );
+        int launch( routine_t start, void* arg=0 );
+
+        /// start a new thread using the specified attributes
+        int launch( const Attr<Thread>& attr, routine_t start, void* arg=0 );
 
         /// join a thread, calling thread blocks until this thread has exited
         /**

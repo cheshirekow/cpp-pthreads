@@ -25,6 +25,7 @@
  */
 
 #include <cpp-pthreads/Condition.h>
+#include <cpp-pthreads/ConditionAttr.h>
 #include <pthread.h>
 
 namespace pthreads {
@@ -33,6 +34,14 @@ int Condition::init()
 {
     pthread_cond_t* data = reinterpret_cast<pthread_cond_t*>(m_data);
     return pthread_cond_init(data,0);
+}
+
+int Condition::init(const Attr<Condition>& attr_in)
+{
+    pthread_cond_t* data = reinterpret_cast<pthread_cond_t*>(m_data);
+    const pthread_condattr_t* attr =
+            reinterpret_cast< const pthread_condattr_t* >(attr_in.m_data);
+    return pthread_cond_init(data,attr);
 }
 
 int Condition::destroy()

@@ -25,6 +25,7 @@
  */
 
 #include <cpp-pthreads/Mutex.h>
+#include <cpp-pthreads/MutexAttr.h>
 #include <pthread.h>
 
 namespace pthreads {
@@ -40,12 +41,19 @@ ScopedLock::~ScopedLock(  )
     m_mutex.unlock();
 }
 
-Mutex::Mutex(){}
 
 int Mutex::init()
 {
     pthread_mutex_t* data = reinterpret_cast<pthread_mutex_t*>(m_data);
     return pthread_mutex_init(data,0);
+}
+
+int Mutex::init( const Attr<Mutex>& attr_in )
+{
+    pthread_mutex_t* data = reinterpret_cast<pthread_mutex_t*>(m_data);
+    const pthread_mutexattr_t* attr =
+            reinterpret_cast<const pthread_mutexattr_t*>(attr_in.m_data);
+    return pthread_mutex_init(data,attr);
 }
 
 int Mutex::destroy()

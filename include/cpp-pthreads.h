@@ -32,6 +32,7 @@
 #include <cpp-pthreads/Attr.h>
 #include <cpp-pthreads/Condition.h>
 #include <cpp-pthreads/ConditionAttr.h>
+#include <cpp-pthreads/Key.h>
 #include <cpp-pthreads/Mutex.h>
 #include <cpp-pthreads/MutexAttr.h>
 #include <cpp-pthreads/Thread.h>

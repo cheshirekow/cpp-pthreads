@@ -28,6 +28,7 @@
 #define CPP_PTHREADS_CONDITION_H_
 
 #include <cpp-pthreads/sizes.h>
+#include <cpp-pthreads/Attr.h>
 #include <cpp-pthreads/Mutex.h>
 
 namespace pthreads {
@@ -40,6 +41,9 @@ class Condition
     public:
         /// calls pthread_cond_init
         int init();
+
+        /// calls pthread_cond_init
+        int init( const Attr<Condition>& attr );
 
         /// calls pthread_cond_destroy
         int destroy();

@@ -28,6 +28,7 @@
 #define CPP_PTHREADS_MUTEX_H_
 
 #include <cpp-pthreads/sizes.h>
+#include <cpp-pthreads/Attr.h>
 
 namespace pthreads {
 
@@ -54,15 +55,15 @@ class Mutex
     private:
         char m_data[ sizeOf::mutex ];
 
+
     public:
         friend class Condition;
 
-        /// Mutexes are not copyable, and can only be constructed as an empty
-        /// block of memory garbage
-        explicit Mutex();
-
         /// calls pthread_mutex_init
         int init();
+
+        /// calls pthread_mutex_init with an attribute object
+        int init( const Attr<Mutex>& attr );
 
         /// calls pthread_mutex_destroy
         int destroy();

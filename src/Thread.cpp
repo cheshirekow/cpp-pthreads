@@ -26,6 +26,7 @@
 
 
 #include <cpp-pthreads/Thread.h>
+#include <cpp-pthreads/ThreadAttr.h>
 #include <pthread.h>
 #include <signal.h>
 
@@ -37,6 +38,14 @@ int Thread::launch( routine_t start, void* arg )
 {
     pthread_t* thread = reinterpret_cast<pthread_t*>(m_data);
     return pthread_create(thread,0,start,arg);
+}
+
+int Thread::launch( const Attr<Thread>& attr_in, routine_t start, void* arg )
+{
+    pthread_t* thread    = reinterpret_cast<pthread_t*>(m_data);
+    const pthread_attr_t* attr =
+                reinterpret_cast<const pthread_attr_t*>(attr_in.m_data);
+    return pthread_create(thread,attr,start,arg);
 }
 
 int Thread::join(void** value_ptr)
