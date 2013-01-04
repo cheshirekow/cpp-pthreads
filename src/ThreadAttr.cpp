@@ -36,12 +36,14 @@ const Assignment<DetachState> SET_DETACHED(DETACHED);
 const Assignment<DetachState> SET_JOINABLE(JOINABLE);
 const Access<DetachState>     DETACH_STATE;
 
+template <>
 int Assignment<DetachState>::set( Thread::Attr& attr_in ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     return pthread_attr_setdetachstate( attr, mapEnum(m_value) );
 }
 
+template <>
 int Access<DetachState>::get( Thread::Attr& attr_in, DetachState& value ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
@@ -56,12 +58,14 @@ const Assignment<InheritSched> SET_INHERIT(INHERIT);
 const Assignment<InheritSched> SET_EXPLICIT(EXPLICIT);
 const Access<InheritSched>     INHERIT_SCHED;
 
+template <>
 int Assignment<InheritSched>::set( Thread::Attr& attr_in ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     return pthread_attr_setinheritsched( attr, mapEnum(m_value) );
 }
 
+template <>
 int Access<InheritSched>::get( Thread::Attr& attr_in, InheritSched& value ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);

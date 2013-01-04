@@ -37,46 +37,27 @@ template <typename T>   struct Assignment;
 template <typename T>   struct Access;
 template <typename T>   struct Delegate;
 
-template <>
-struct Assignment<DetachState>
+template <typename T>
+struct Assignment
 {
-    DetachState  m_value;
-    Assignment( DetachState value ):
+    T  m_value;
+    Assignment( T value ):
         m_value(value)
     {}
+
     int set( Thread::Attr& attr ) const;
 };
 
-template <>
-struct Access<DetachState>
+template <typename T>
+struct Access
 {
     Access(){}
-    int get( Thread::Attr& attr, DetachState& value ) const;
+    int get( Thread::Attr& attr, T& value ) const;
 };
 
 extern const Assignment<DetachState> SET_DETACHED;
 extern const Assignment<DetachState> SET_JOINABLE;
 extern const Access<DetachState>     DETACH_STATE;
-
-
-
-template <>
-struct Assignment<InheritSched>
-{
-    InheritSched  m_value;
-    Assignment( InheritSched value ):
-        m_value(value)
-    {}
-    int set( Thread::Attr& attr ) const;
-};
-
-template <>
-struct Access<InheritSched>
-{
-    Access(){}
-    int get( Thread::Attr& attr, InheritSched& value )const;
-};
-
 
 extern const Assignment<InheritSched> SET_INHERIT;
 extern const Assignment<InheritSched> SET_EXPLICIT;
