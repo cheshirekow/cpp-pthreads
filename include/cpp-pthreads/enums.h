@@ -35,7 +35,8 @@ namespace pthreads {
 enum DetachState
 {
     DETACHED=0,
-    JOINABLE=1
+    JOINABLE=1,
+    INVALID_DETACH_STATE
 };
 
 
@@ -43,8 +44,9 @@ enum DetachState
 /// creating thread or if it uses the policy stored in the attribute object
 enum InheritSched
 {
-    INHERIT = 0,
-    EXPLICI = 1
+    INHERIT  = 0,
+    EXPLICIT = 1,
+    INVALID_INHERIT_SCHED
 };
 
 /// if multiple threads are waiting on the same mutex, the Scheduling Policy
@@ -56,13 +58,15 @@ enum SchedPolicy
     RR    = 2,
     BATCH = 3,
     IDLE  = 4,
+    INVALID_SCHED_POLICY
 };
 
 /// Signifies process or system scheduling contention scope
 enum Scope
 {
     SYSTEM  =0,
-    PROCESS =1
+    PROCESS =1,
+    INVALID_SCOPE
 };
 
 
@@ -70,10 +74,6 @@ enum Scope
 /// returns pointer to a map from enums to pthread enums (ints)
 template <typename Enum>
 int* getEnumMap();
-
-/// returns pointer to a map from enums to pthread enums (ints)
-template <typename Enum>
-int* getReverseMap();
 
 /// returns the pthread integer enumerator that corresponds to the
 /// specified value
@@ -86,10 +86,7 @@ int mapEnum( Enum val )
 /// returns the pthread integer enumerator that corresponds to the
 /// specified value
 template <typename Enum>
-Enum getEnum( int val )
-{
-    return getReverseMap<Enum>()[val];
-}
+Enum getEnum( int val );
 
 } // namespace pthreads
 

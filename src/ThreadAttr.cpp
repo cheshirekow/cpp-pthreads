@@ -38,7 +38,7 @@ const DetachStateAccess     DETACH_STATE;
 int DetachStateAssignment::set( Thread::Attr& attr_in ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
-    return pthread_attr_setdetachstate( attr, m_value );
+    return pthread_attr_setdetachstate( attr, mapEnum(m_value) );
 }
 
 int DetachStateAccess::get( Thread::Attr& attr_in, DetachState& value ) const
@@ -46,7 +46,7 @@ int DetachStateAccess::get( Thread::Attr& attr_in, DetachState& value ) const
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     int outVal;
     int returnVal =  pthread_attr_getdetachstate( attr, &outVal );
-    value = (DetachState)(outVal);
+    value = getEnum<DetachState>(outVal);
     return returnVal;
 }
 

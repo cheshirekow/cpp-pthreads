@@ -80,7 +80,6 @@ struct DetachStateAccess:
 };
 
 
-
 extern const DetachStateAssignment SET_DETACHED;
 extern const DetachStateAssignment SET_JOINABLE;
 extern const DetachStateAccess     DETACH_STATE;
