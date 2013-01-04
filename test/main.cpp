@@ -59,7 +59,16 @@ int main(int argc, char** argv)
     attr << SET_JOINABLE;
 
     DetachState detach;
+    InheritSched inherit;
     attr.get( DETACH_STATE, detach );
+    attr.get( INHERIT_SCHED, inherit );
+
+    attr[DETACH_STATE] = DETACHED;
+    attr[INHERIT_SCHED]= INHERIT;
+
+    detach  = attr[DETACH_STATE];
+    inherit = attr[INHERIT_SCHED];
+
 
     return 0;
 }

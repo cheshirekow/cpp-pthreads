@@ -51,6 +51,26 @@ int DetachStateAccess::get( Thread::Attr& attr_in, DetachState& value ) const
 }
 
 
+const InheritSchedAssignment SET_INHERIT(INHERIT);
+const InheritSchedAssignment SET_EXPLICIT(EXPLICIT);
+const InheritSchedAccess     INHERIT_SCHED;
+
+int InheritSchedAssignment::set( Thread::Attr& attr_in ) const
+{
+    pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
+    return pthread_attr_setinheritsched( attr, mapEnum(m_value) );
+}
+
+int InheritSchedAccess::get( Thread::Attr& attr_in, InheritSched& value ) const
+{
+    pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
+    int outVal;
+    int returnVal =  pthread_attr_getinheritsched( attr, &outVal );
+    value = getEnum<InheritSched>(outVal);
+    return returnVal;
+}
+
+
 
 int Thread::Attr::init()
 {

@@ -36,6 +36,7 @@ namespace pthreads {
 /// private classes used by Thread::Attr
 namespace     attr {
 
+/// interface for assignment delegates
 template <typename T>
 struct Assignment
 {
@@ -43,15 +44,13 @@ struct Assignment
     virtual int set( Thread::Attr& attr ) const=0;
 };
 
+/// interface for access delegates
 template <typename T>
 struct Access
 {
     virtual ~Access(){}
     virtual int get( Thread::Attr& attr, T& value ) const=0;
 };
-
-template <typename Enum>
-struct Delegate;
 
 } // namespace attr
 
@@ -61,28 +60,67 @@ struct DetachStateAssignment:
     public attr::Assignment<DetachState>
 {
     DetachState  m_value;
-
-    DetachStateAssignment( DetachState value = DETACHED ):
+    DetachStateAssignment( DetachState value ):
         m_value(value)
     {}
-
     virtual ~DetachStateAssignment(){}
-
     virtual int set( Thread::Attr& attr ) const;
 };
+
+struct DetachStateDelegate;
 
 struct DetachStateAccess:
     public attr::Access<DetachState>
 {
+    typedef DetachStateDelegate Delegate_t;
+
     DetachStateAccess(){}
     virtual ~DetachStateAccess(){}
     virtual int get( Thread::Attr& attr, DetachState& value )const;
 };
 
-
 extern const DetachStateAssignment SET_DETACHED;
 extern const DetachStateAssignment SET_JOINABLE;
 extern const DetachStateAccess     DETACH_STATE;
+
+
+
+
+struct InheritSchedAssignment:
+    public attr::Assignment<InheritSched>
+{
+    InheritSched  m_value;
+    InheritSchedAssignment( InheritSched value ):
+        m_value(value)
+    {}
+    virtual ~InheritSchedAssignment(){}
+    virtual int set( Thread::Attr& attr ) const;
+};
+
+struct InheritSchedDelegate;
+
+struct InheritSchedAccess:
+    public attr::Access<InheritSched>
+{
+    typedef InheritSchedDelegate Delegate_t;
+    InheritSchedAccess(){}
+    virtual ~InheritSchedAccess(){}
+    virtual int get( Thread::Attr& attr, InheritSched& value )const;
+};
+
+
+extern const InheritSchedAssignment SET_INHERIT;
+extern const InheritSchedAssignment SET_EXPLICIT;
+extern const InheritSchedAccess     INHERIT_SCHED;
+
+
+
+
+
+
+
+
+
 
 
 class Thread::Attr
@@ -93,6 +131,8 @@ class Thread::Attr
     public:
         friend class DetachStateAssignment;
         friend class DetachStateAccess;
+        friend class InheritSchedAssignment;
+        friend class InheritSchedAccess;
 
         /// pthread_attr_init
         int init();
@@ -129,9 +169,66 @@ class Thread::Attr
             return *this;
         }
 
-
-
+        /// map operator, unsafe assignment and retrieval, ignores error values
+        /// returned
+        template <typename T>
+        typename T::Delegate_t operator[]( const T& access )
+        {
+            return typename T::Delegate_t(*this);
+        }
 };
+
+
+
+struct DetachStateDelegate
+{
+    Thread::Attr&   m_attr;
+
+    DetachStateDelegate( Thread::Attr& attr ):
+        m_attr(attr)
+    {}
+
+    operator DetachState()
+    {
+        DetachState value;
+        m_attr.get(DETACH_STATE,value);
+        return value;
+    }
+
+    int operator=( DetachState value )
+    {
+        DetachStateAssignment assignment(value);
+        return m_attr.set(assignment);
+    }
+};
+
+struct InheritSchedDelegate
+{
+    Thread::Attr&   m_attr;
+
+    InheritSchedDelegate( Thread::Attr& attr ):
+        m_attr(attr)
+    {}
+
+    operator InheritSched()
+    {
+        InheritSched value;
+        m_attr.get(INHERIT_SCHED,value);
+        return value;
+    }
+
+    int operator=( InheritSched value )
+    {
+        InheritSchedAssignment assignment(value);
+        return m_attr.set(assignment);
+    }
+};
+
+
+
+
+
+
 
 }
 
