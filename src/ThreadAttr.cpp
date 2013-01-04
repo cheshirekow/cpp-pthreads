@@ -32,19 +32,19 @@ namespace pthreads
 {
 
 
-const Assignment<DetachState> SET_DETACHED(DETACHED);
-const Assignment<DetachState> SET_JOINABLE(JOINABLE);
-const Access<DetachState>     DETACH_STATE;
+const Assignment<Thread,DetachState> SET_DETACHED(DETACHED);
+const Assignment<Thread,DetachState> SET_JOINABLE(JOINABLE);
+const Access<Thread,DetachState>     DETACH_STATE;
 
 template <>
-int Assignment<DetachState>::set( Thread::Attr& attr_in ) const
+int Assignment<Thread,DetachState>::set( Attr<Thread>& attr_in ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     return pthread_attr_setdetachstate( attr, mapEnum(m_value) );
 }
 
 template <>
-int Access<DetachState>::get( Thread::Attr& attr_in, DetachState& value ) const
+int Access<Thread,DetachState>::get( Attr<Thread>& attr_in, DetachState& value ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     int outVal;
@@ -54,19 +54,19 @@ int Access<DetachState>::get( Thread::Attr& attr_in, DetachState& value ) const
 }
 
 
-const Assignment<InheritSched> SET_INHERIT(INHERIT);
-const Assignment<InheritSched> SET_EXPLICIT(EXPLICIT);
-const Access<InheritSched>     INHERIT_SCHED;
+const Assignment<Thread,InheritSched> SET_INHERIT(INHERIT);
+const Assignment<Thread,InheritSched> SET_EXPLICIT(EXPLICIT);
+const Access<Thread,InheritSched>     INHERIT_SCHED;
 
 template <>
-int Assignment<InheritSched>::set( Thread::Attr& attr_in ) const
+int Assignment<Thread,InheritSched>::set( Attr<Thread>& attr_in ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     return pthread_attr_setinheritsched( attr, mapEnum(m_value) );
 }
 
 template <>
-int Access<InheritSched>::get( Thread::Attr& attr_in, InheritSched& value ) const
+int Access<Thread,InheritSched>::get( Attr<Thread>& attr_in, InheritSched& value ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     int outVal;
@@ -76,14 +76,15 @@ int Access<InheritSched>::get( Thread::Attr& attr_in, InheritSched& value ) cons
 }
 
 
-
-int Thread::Attr::init()
+template <>
+int Attr<Thread>::init()
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(m_data);
     return pthread_attr_init( attr );
 }
 
-int Thread::Attr::destroy()
+template <>
+int Attr<Thread>::destroy()
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(m_data);
     return pthread_attr_destroy( attr );

@@ -54,7 +54,7 @@ int main(int argc, char** argv)
         threads[i].join();
 
 
-    Thread::Attr attr;
+    Attr<Thread> attr;
     attr.set( SET_DETACHED );
     attr << SET_JOINABLE;
 

@@ -30,128 +30,20 @@
 #include <cpp-pthreads/Thread.h>
 #include <cpp-pthreads/sizes.h>
 #include <cpp-pthreads/enums.h>
+#include <cpp-pthreads/attr.h>
 
 namespace pthreads {
 
-template <typename T>   struct Assignment;
-template <typename T>   struct Access;
-template <typename T>   struct Delegate;
-
-template <typename T>
-struct Assignment
-{
-    T  m_value;
-    Assignment( T value ):
-        m_value(value)
-    {}
-
-    int set( Thread::Attr& attr ) const;
-};
-
-template <typename T>
-struct Access
-{
-    Access(){}
-    int get( Thread::Attr& attr, T& value ) const;
-};
-
-extern const Assignment<DetachState> SET_DETACHED;
-extern const Assignment<DetachState> SET_JOINABLE;
-extern const Access<DetachState>     DETACH_STATE;
-
-extern const Assignment<InheritSched> SET_INHERIT;
-extern const Assignment<InheritSched> SET_EXPLICIT;
-extern const Access<InheritSched>     INHERIT_SCHED;
 
 
+extern const Assignment<Thread,DetachState> SET_DETACHED;
+extern const Assignment<Thread,DetachState> SET_JOINABLE;
+extern const Access<Thread,DetachState>     DETACH_STATE;
 
+extern const Assignment<Thread,InheritSched> SET_INHERIT;
+extern const Assignment<Thread,InheritSched> SET_EXPLICIT;
+extern const Access<Thread,InheritSched>     INHERIT_SCHED;
 
-
-
-
-
-
-
-
-class Thread::Attr
-{
-    private:
-        char m_data [ sizeOf::attr ];
-
-    public:
-        template <typename T> friend class Assignment;
-        template <typename T> friend class Access;
-        template <typename T> friend class Delegate;
-
-        /// pthread_attr_init
-        int init();
-
-        /// pthread_attr_destroy
-        int destroy();
-
-        /// safe assignment
-        template <typename T>
-        int set( const Assignment<T>& assignment )
-        {
-            return assignment.set(*this);
-        }
-
-        /// assign an attribute
-        template <typename T>
-        int operator=( const Assignment<T>& assignment )
-        {
-            return assignment.set(*this);
-        }
-
-        /// safe value retrieval
-        template <typename T>
-        int get( const Access<T>& access, T& value )
-        {
-            return access.get( *this, value );
-        }
-
-        /// stream assignment, unsafe, ignores error values returned
-        template <typename T>
-        Thread::Attr& operator << ( const Assignment<T>& assignment )
-        {
-            assignment.set(*this);
-            return *this;
-        }
-
-        /// map operator, unsafe assignment and retrieval, ignores error values
-        /// returned
-        template <typename T>
-        Delegate<T> operator[]( const Access<T>& access )
-        {
-            return Delegate<T>(*this);
-        }
-};
-
-
-
-template <typename T>
-struct Delegate
-{
-    Thread::Attr&   m_attr;
-
-    Delegate( Thread::Attr& attr ):
-        m_attr(attr)
-    {}
-
-    operator T()
-    {
-        T value;
-        Access<T> access;
-        m_attr.get(access,value);
-        return value;
-    }
-
-    int operator=( T value )
-    {
-        Assignment<T> assignment(value);
-        return m_attr.set(assignment);
-    }
-};
 
 
 
