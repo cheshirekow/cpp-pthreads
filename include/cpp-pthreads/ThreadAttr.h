@@ -27,12 +27,11 @@
 #ifndef CPP_PTHREADS_THREADATTR_H_
 #define CPP_PTHREADS_THREADATTR_H_
 
-#include <cpp-pthreads/sizes.h>
 #include <cpp-pthreads/enums.h>
 #include <cpp-pthreads/Attr.h>
 #include <cpp-pthreads/Thread.h>
 #include <cstdarg>
-
+#include <pthread.h>
 
 namespace pthreads {
 
@@ -61,9 +60,9 @@ extern const Access<Thread,Stack>           STACK_ADDR;
 extern const Access<Thread,StackSize>       STACK_SIZE;
 
 template<>
-struct AttrSize<Thread>
+struct AttrType<Thread>
 {
-    static const unsigned int size = sizeOf::attr;
+    typedef pthread_attr_t type;
 };
 
 

@@ -44,52 +44,51 @@ ScopedLock::~ScopedLock(  )
 
 int Mutex::init()
 {
-    pthread_mutex_t* data = reinterpret_cast<pthread_mutex_t*>(m_data);
-    return pthread_mutex_init(data,0);
+    pthread_mutex_t* mutex = &m_data;
+    return pthread_mutex_init(mutex,0);
 }
 
 int Mutex::init( const Attr<Mutex>& attr_in )
 {
-    pthread_mutex_t* data = reinterpret_cast<pthread_mutex_t*>(m_data);
-    const pthread_mutexattr_t* attr =
-            reinterpret_cast<const pthread_mutexattr_t*>(attr_in.m_data);
-    return pthread_mutex_init(data,attr);
+    pthread_mutex_t* mutex = &m_data;
+    const pthread_mutexattr_t* attr = &(attr_in.m_data);
+    return pthread_mutex_init(mutex,attr);
 }
 
 int Mutex::destroy()
 {
-    pthread_mutex_t* data = reinterpret_cast<pthread_mutex_t*>(m_data);
-    return pthread_mutex_destroy(data);
+    pthread_mutex_t* mutex = &m_data;
+    return pthread_mutex_destroy(mutex);
 }
 
 int Mutex::setPriorityCeiling( int newCeil, int* oldCeil )
 {
-    pthread_mutex_t* data = reinterpret_cast<pthread_mutex_t*>(m_data);
-    return pthread_mutex_setprioceiling(data,newCeil,oldCeil);
+    pthread_mutex_t* mutex = &m_data;
+    return pthread_mutex_setprioceiling(mutex,newCeil,oldCeil);
 }
 
 int Mutex::getPriorityCeiling( int& ceil )
 {
-    pthread_mutex_t* data = reinterpret_cast<pthread_mutex_t*>(m_data);
-    return pthread_mutex_getprioceiling(data,&ceil);
+    pthread_mutex_t* mutex = &m_data;
+    return pthread_mutex_getprioceiling(mutex,&ceil);
 }
 
 int Mutex::lock()
 {
-    pthread_mutex_t* data = reinterpret_cast<pthread_mutex_t*>(m_data);
-    return pthread_mutex_lock(data);
+    pthread_mutex_t* mutex = &m_data;
+    return pthread_mutex_lock(mutex);
 }
 
 int Mutex::trylock()
 {
-    pthread_mutex_t* data = reinterpret_cast<pthread_mutex_t*>(m_data);
-    return pthread_mutex_trylock(data);
+    pthread_mutex_t* mutex = &m_data;
+    return pthread_mutex_trylock(mutex);
 }
 
 int Mutex::unlock()
 {
-    pthread_mutex_t* data = reinterpret_cast<pthread_mutex_t*>(m_data);
-    return pthread_mutex_unlock(data);
+    pthread_mutex_t* mutex = &m_data;
+    return pthread_mutex_unlock(mutex);
 }
 
 }

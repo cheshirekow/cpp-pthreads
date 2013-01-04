@@ -29,12 +29,12 @@
 
 
 
-#include <cpp-pthreads/sizes.h>
 #include <cpp-pthreads/enums.h>
 #include <cpp-pthreads/Attr.h>
 #include <cpp-pthreads/Mutex.h>
 #include <cstdarg>
 #include <ctime>
+#include <pthread.h>
 
 
 namespace pthreads {
@@ -48,9 +48,9 @@ extern const Access<Mutex,Type>             TYPE;
 
 
 template<>
-struct AttrSize<Mutex>
+struct AttrType<Mutex>
 {
-    static const unsigned int size = sizeOf::mutexattr;
+    typedef pthread_mutexattr_t type;
 };
 
 

@@ -37,16 +37,14 @@ const Access<Barrier,PShared>          B_PSHARED;
 template <>
 int Assignment<Barrier,PShared>::set( Attr<Barrier>& attr_in ) const
 {
-    pthread_barrierattr_t* attr =
-            reinterpret_cast< pthread_barrierattr_t* >(attr_in.m_data);
+    pthread_barrierattr_t* attr = &(attr_in.m_data);
     return pthread_barrierattr_setpshared( attr, mapEnum(m_value) );
 }
 
 template <>
 int Access<Barrier,PShared>::get( Attr<Barrier>& attr_in, PShared& value ) const
 {
-    pthread_barrierattr_t* attr =
-            reinterpret_cast< pthread_barrierattr_t* >(attr_in.m_data);
+    pthread_barrierattr_t* attr = &(attr_in.m_data);
     int outVal;
     int returnVal =  pthread_barrierattr_getpshared( attr, &outVal );
     value = getEnum<PShared>(outVal);
@@ -59,14 +57,14 @@ int Access<Barrier,PShared>::get( Attr<Barrier>& attr_in, PShared& value ) const
 template <>
 int Attr<Barrier>::init()
 {
-    pthread_barrierattr_t* attr = reinterpret_cast< pthread_barrierattr_t* >(m_data);
+    pthread_barrierattr_t* attr = &m_data;
     return pthread_barrierattr_init( attr );
 }
 
 template <>
 int Attr<Barrier>::destroy()
 {
-    pthread_barrierattr_t* attr = reinterpret_cast< pthread_barrierattr_t* >(m_data);
+    pthread_barrierattr_t* attr = &m_data;
     return pthread_barrierattr_destroy( attr );
 }
 

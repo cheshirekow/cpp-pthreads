@@ -31,29 +31,25 @@ namespace pthreads{
 
 int Key::create( Destructor_t destruct)
 {
-    pthread_key_t* key =
-            reinterpret_cast<pthread_key_t*>( m_data );
+    pthread_key_t* key = &m_data;
     return pthread_key_create(key,destruct);
 }
 
 int Key::destroy()
 {
-    pthread_key_t* key =
-            reinterpret_cast<pthread_key_t*>( m_data );
+    pthread_key_t* key = &m_data;
     return pthread_key_delete(*key);
 }
 
 void* Key::getSpecific()
 {
-    pthread_key_t* key =
-            reinterpret_cast<pthread_key_t*>( m_data );
+    pthread_key_t* key = &m_data;
     return pthread_getspecific(*key);
 }
 
 int Key::setSpecific(void* data)
 {
-    pthread_key_t* key =
-            reinterpret_cast<pthread_key_t*>( m_data );
+    pthread_key_t* key = &m_data;
     return pthread_setspecific(*key, data);
 }
 

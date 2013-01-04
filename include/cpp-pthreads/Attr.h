@@ -27,7 +27,6 @@
 #ifndef CPP_PTHREADS_ATTR_H_
 #define CPP_PTHREADS_ATTR_H_
 
-#include <cpp-pthreads/sizes.h>
 
 namespace pthreads
 {
@@ -42,7 +41,7 @@ template <class Base, typename T>   struct Assignment;
 template <class Base, typename T>   struct Access;
 template <class Base, typename T>   struct Delegate;
 
-template <class Base>               struct AttrSize;
+template <class Base>               struct AttrType;
 
 
 template <class Base, typename T>
@@ -73,7 +72,7 @@ template <class Base>
 class Attr
 {
     private:
-        char m_data [ AttrSize<Base>::size ];
+        typename AttrType<Base>::type m_data;
 
     public:
         template <class Base2, typename T> friend class Assignment;

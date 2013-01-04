@@ -27,21 +27,21 @@
 #ifndef CPP_PTHREADS_BARRIERATTR_H_
 #define CPP_PTHREADS_BARRIERATTR_H_
 
-#include <cpp-pthreads/sizes.h>
 #include <cpp-pthreads/enums.h>
 #include <cpp-pthreads/Attr.h>
 #include <cpp-pthreads/Barrier.h>
 #include <cstdarg>
 #include <ctime>
+#include <pthread.h>
 
 namespace pthreads {
 
 extern const Access<Barrier,PShared>          B_PSHARED;
 
 template<>
-struct AttrSize<Barrier>
+struct AttrType<Barrier>
 {
-    static const unsigned int size = sizeOf::barrierattr;
+    typedef pthread_barrierattr_t type;
 };
 
 }

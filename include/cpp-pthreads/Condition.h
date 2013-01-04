@@ -27,16 +27,16 @@
 #ifndef CPP_PTHREADS_CONDITION_H_
 #define CPP_PTHREADS_CONDITION_H_
 
-#include <cpp-pthreads/sizes.h>
 #include <cpp-pthreads/Attr.h>
 #include <cpp-pthreads/Mutex.h>
+#include <pthread.h>
 
 namespace pthreads {
 
 class Condition
 {
     private:
-        char m_data[ sizeOf::cond ];
+        pthread_cond_t m_data;
 
     public:
         /// calls pthread_cond_init

@@ -28,7 +28,7 @@
 #define CPP_PTHREADS_KEY_H_
 
 
-#include <cpp-pthreads/sizes.h>
+#include <pthread.h>
 
 namespace pthreads {
 
@@ -38,7 +38,7 @@ class Key
         typedef void (*Destructor_t)(void*);
 
     private:
-        char m_data[ sizeOf::key ];
+        pthread_key_t m_data;
 
     public:
         /// create a key that can be used to identify per-thread specific

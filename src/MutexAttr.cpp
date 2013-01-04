@@ -44,16 +44,14 @@ const Access<Mutex,Type>             TYPE;
 template <>
 int Assignment<Mutex,PShared>::set( Attr<Mutex>& attr_in ) const
 {
-    pthread_mutexattr_t* attr =
-            reinterpret_cast< pthread_mutexattr_t* >(attr_in.m_data);
+    pthread_mutexattr_t* attr = &(attr_in.m_data);
     return pthread_mutexattr_setpshared( attr, mapEnum(m_value) );
 }
 
 template <>
 int Access<Mutex,PShared>::get( Attr<Mutex>& attr_in, PShared& value ) const
 {
-    pthread_mutexattr_t* attr =
-            reinterpret_cast< pthread_mutexattr_t* >(attr_in.m_data);
+    pthread_mutexattr_t* attr = &(attr_in.m_data);
     int outVal;
     int returnVal =  pthread_mutexattr_getpshared( attr, &outVal );
     value = getEnum<PShared>(outVal);
@@ -66,16 +64,14 @@ int Access<Mutex,PShared>::get( Attr<Mutex>& attr_in, PShared& value ) const
 template <>
 int Assignment<Mutex,PriorityCeiling>::set( Attr<Mutex>& attr_in ) const
 {
-    pthread_mutexattr_t* attr =
-            reinterpret_cast< pthread_mutexattr_t* >(attr_in.m_data);
+    pthread_mutexattr_t* attr = &(attr_in.m_data);
     return pthread_mutexattr_setprioceiling( attr, m_value );
 }
 
 template <>
 int Access<Mutex,PriorityCeiling>::get( Attr<Mutex>& attr_in, PriorityCeiling& value ) const
 {
-    pthread_mutexattr_t* attr =
-            reinterpret_cast< pthread_mutexattr_t* >(attr_in.m_data);
+    pthread_mutexattr_t* attr = &(attr_in.m_data);
     int outVal;
     int returnVal =  pthread_mutexattr_getprioceiling( attr, &outVal );
     value = outVal;
@@ -88,16 +84,14 @@ int Access<Mutex,PriorityCeiling>::get( Attr<Mutex>& attr_in, PriorityCeiling& v
 template <>
 int Assignment<Mutex,Protocol>::set( Attr<Mutex>& attr_in ) const
 {
-    pthread_mutexattr_t* attr =
-            reinterpret_cast< pthread_mutexattr_t* >(attr_in.m_data);
+    pthread_mutexattr_t* attr = &(attr_in.m_data);
     return pthread_mutexattr_setprotocol( attr, mapEnum(m_value) );
 }
 
 template <>
 int Access<Mutex,Protocol>::get( Attr<Mutex>& attr_in, Protocol& value ) const
 {
-    pthread_mutexattr_t* attr =
-            reinterpret_cast< pthread_mutexattr_t* >(attr_in.m_data);
+    pthread_mutexattr_t* attr = &(attr_in.m_data);
     int outVal;
     int returnVal =  pthread_mutexattr_getprotocol( attr, &outVal );
     value = getEnum<Protocol>(outVal);
@@ -110,16 +104,14 @@ int Access<Mutex,Protocol>::get( Attr<Mutex>& attr_in, Protocol& value ) const
 template <>
 int Assignment<Mutex,Type>::set( Attr<Mutex>& attr_in ) const
 {
-    pthread_mutexattr_t* attr =
-            reinterpret_cast< pthread_mutexattr_t* >(attr_in.m_data);
+    pthread_mutexattr_t* attr = &(attr_in.m_data);
     return pthread_mutexattr_settype( attr, mapEnum(m_value) );
 }
 
 template <>
 int Access<Mutex,Type>::get( Attr<Mutex>& attr_in, Type& value ) const
 {
-    pthread_mutexattr_t* attr =
-            reinterpret_cast< pthread_mutexattr_t* >(attr_in.m_data);
+    pthread_mutexattr_t* attr = &(attr_in.m_data);
     int outVal;
     int returnVal =  pthread_mutexattr_gettype( attr, &outVal );
     value = getEnum<Type>(outVal);
@@ -132,14 +124,14 @@ int Access<Mutex,Type>::get( Attr<Mutex>& attr_in, Type& value ) const
 template <>
 int Attr<Mutex>::init()
 {
-    pthread_mutexattr_t* attr = reinterpret_cast< pthread_mutexattr_t* >(m_data);
+    pthread_mutexattr_t* attr = &m_data;
     return pthread_mutexattr_init( attr );
 }
 
 template <>
 int Attr<Mutex>::destroy()
 {
-    pthread_mutexattr_t* attr = reinterpret_cast< pthread_mutexattr_t* >(m_data);
+    pthread_mutexattr_t* attr = &m_data;
     return pthread_mutexattr_destroy( attr );
 }
 

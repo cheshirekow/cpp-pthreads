@@ -28,13 +28,12 @@
 #define CPP_PTHREADS_CONDITIONATTR_H_
 
 
-#include <cpp-pthreads/sizes.h>
 #include <cpp-pthreads/enums.h>
 #include <cpp-pthreads/Attr.h>
 #include <cpp-pthreads/Condition.h>
 #include <cstdarg>
 #include <ctime>
-
+#include <pthread.h>
 
 namespace pthreads {
 
@@ -46,9 +45,9 @@ extern const Access<Condition,PShared>  C_PSHARED;
 
 
 template<>
-struct AttrSize<Condition>
+struct AttrType<Condition>
 {
-    static const unsigned int size = sizeOf::condattr;
+    typedef pthread_condattr_t type;
 };
 
 

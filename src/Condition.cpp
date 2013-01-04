@@ -32,40 +32,39 @@ namespace pthreads {
 
 int Condition::init()
 {
-    pthread_cond_t* data = reinterpret_cast<pthread_cond_t*>(m_data);
-    return pthread_cond_init(data,0);
+    pthread_cond_t* cond = &m_data;
+    return pthread_cond_init(cond,0);
 }
 
 int Condition::init(const Attr<Condition>& attr_in)
 {
-    pthread_cond_t* data = reinterpret_cast<pthread_cond_t*>(m_data);
-    const pthread_condattr_t* attr =
-            reinterpret_cast< const pthread_condattr_t* >(attr_in.m_data);
-    return pthread_cond_init(data,attr);
+    pthread_cond_t* cond = &m_data;
+    const pthread_condattr_t* attr = &(attr_in.m_data);
+    return pthread_cond_init(cond,attr);
 }
 
 int Condition::destroy()
 {
-    pthread_cond_t* data = reinterpret_cast<pthread_cond_t*>(m_data);
-    return pthread_cond_destroy(data);
+    pthread_cond_t* cond = &m_data;
+    return pthread_cond_destroy(cond);
 }
 
 int Condition::broadcast()
 {
-    pthread_cond_t* data = reinterpret_cast<pthread_cond_t*>(m_data);
-    return pthread_cond_broadcast(data);
+    pthread_cond_t* cond = &m_data;
+    return pthread_cond_broadcast(cond);
 }
 
 int Condition::signal()
 {
-    pthread_cond_t* data = reinterpret_cast<pthread_cond_t*>(m_data);
-    return pthread_cond_signal(data);
+    pthread_cond_t* cond = &m_data;
+    return pthread_cond_signal(cond);
 }
 
 int Condition::wait( Mutex& mutex_in )
 {
-    pthread_cond_t*  cond  = reinterpret_cast<pthread_cond_t*>(m_data);
-    pthread_mutex_t* mutex = reinterpret_cast<pthread_mutex_t*>(mutex_in.m_data);
+    pthread_cond_t* cond = &m_data;
+    pthread_mutex_t* mutex = &(mutex_in.m_data);
     return pthread_cond_wait(cond,mutex);
 }
 

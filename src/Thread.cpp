@@ -36,50 +36,40 @@ namespace pthreads
 
 int Thread::launch( routine_t start, void* arg )
 {
-    pthread_t* thread = reinterpret_cast<pthread_t*>(m_data);
+    pthread_t* thread = &m_data;
     return pthread_create(thread,0,start,arg);
 }
 
 int Thread::launch( const Attr<Thread>& attr_in, routine_t start, void* arg )
 {
-    pthread_t* thread    = reinterpret_cast<pthread_t*>(m_data);
-    const pthread_attr_t* attr =
-                reinterpret_cast<const pthread_attr_t*>(attr_in.m_data);
+    pthread_t* thread    = &m_data;
+    const pthread_attr_t* attr = &(attr_in.m_data);
     return pthread_create(thread,attr,start,arg);
 }
 
 int Thread::join(void** value_ptr)
 {
-    pthread_t* thread = reinterpret_cast<pthread_t*>(m_data);
-    return pthread_join(*thread,value_ptr);
+    return pthread_join(m_data,value_ptr);
 }
 
 int Thread::detach()
 {
-    pthread_t* thread = reinterpret_cast<pthread_t*>(m_data);
-    return pthread_detach(*thread);
+    return pthread_detach(m_data);
 }
 
 int Thread::cancel()
 {
-    pthread_t* thread = reinterpret_cast<pthread_t*>(m_data);
-    return pthread_cancel( *thread );
+    return pthread_cancel( m_data );
 }
 
 int Thread::kill( int sig )
 {
-    pthread_t* thread = reinterpret_cast<pthread_t*>(m_data);
-    return pthread_kill(*thread,sig);
+    return pthread_kill(m_data,sig);
 }
 
 bool Thread::operator==( const Thread& other )
 {
-          pthread_t* thread_a =
-                        reinterpret_cast<pthread_t*>(m_data);
-    const pthread_t* thread_b =
-                        reinterpret_cast<const pthread_t*>(other.m_data);
-
-    return pthread_equal(*thread_a,*thread_b);
+    return pthread_equal(m_data,other.m_data);
 }
 
 void Thread::exit( void* value_ptr )
@@ -90,8 +80,7 @@ void Thread::exit( void* value_ptr )
 Thread Thread::self()
 {
     Thread thread;
-    pthread_t* thread_id = reinterpret_cast<pthread_t*>(thread.m_data);
-    *thread_id = pthread_self();
+    thread.m_data = pthread_self();
     return thread;
 }
 

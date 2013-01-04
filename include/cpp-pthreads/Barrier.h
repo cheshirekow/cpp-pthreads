@@ -27,15 +27,15 @@
 #ifndef CPP_PTHREADS_BARRIER_H_
 #define CPP_PTHREADS_BARRIER_H_
 
-#include <cpp-pthreads/sizes.h>
 #include <cpp-pthreads/Attr.h>
+#include <pthread.h>
 
 namespace pthreads {
 
 class Barrier
 {
     private:
-        char m_data[ sizeOf::barrier ];
+        pthread_barrier_t m_data;
 
     public:
         ///

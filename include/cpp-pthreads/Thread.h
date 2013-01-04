@@ -27,8 +27,8 @@
 #ifndef CPP_PTHREADS_THREAD_H_
 #define CPP_PTHREADS_THREAD_H_
 
-#include <cpp-pthreads/sizes.h>
 #include <cpp-pthreads/Attr.h>
+#include <pthread.h>
 
 namespace pthreads
 {
@@ -48,7 +48,7 @@ class Thread
         typedef void *(*routine_t)(void*);
 
     private:
-        char m_data[ sizeOf::pthread ];
+        pthread_t m_data;
 
     public:
         /// start a new thread storing the id in m_data

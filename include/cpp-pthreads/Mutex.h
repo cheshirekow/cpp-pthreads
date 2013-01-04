@@ -27,8 +27,8 @@
 #ifndef CPP_PTHREADS_MUTEX_H_
 #define CPP_PTHREADS_MUTEX_H_
 
-#include <cpp-pthreads/sizes.h>
 #include <cpp-pthreads/Attr.h>
+#include <pthread.h>
 
 namespace pthreads {
 
@@ -53,8 +53,7 @@ class Condition;
 class Mutex
 {
     private:
-        char m_data[ sizeOf::mutex ];
-
+        pthread_mutex_t m_data;
 
     public:
         friend class Condition;
