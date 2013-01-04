@@ -39,10 +39,10 @@ class Condition
 
     public:
         /// calls pthread_cond_init
-        Condition();
+        int init();
 
         /// calls pthread_cond_destroy
-        ~Condition();
+        int destroy();
 
         /// calls pthread_cond_broadcast
         int broadcast();

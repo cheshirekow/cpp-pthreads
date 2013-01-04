@@ -29,16 +29,16 @@
 
 namespace pthreads {
 
-Condition::Condition()
+int Condition::init()
 {
     pthread_cond_t* data = reinterpret_cast<pthread_cond_t*>(m_data);
-    pthread_cond_init(data,0);
+    return pthread_cond_init(data,0);
 }
 
-Condition::~Condition()
+int Condition::destroy()
 {
     pthread_cond_t* data = reinterpret_cast<pthread_cond_t*>(m_data);
-    pthread_cond_destroy(data);
+    return pthread_cond_destroy(data);
 }
 
 int Condition::broadcast()

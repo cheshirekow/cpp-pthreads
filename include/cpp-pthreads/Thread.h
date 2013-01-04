@@ -48,17 +48,9 @@ class Thread
     private:
         char m_data[ sizeOf::pthread ];
 
-        /// simply allocates a thread object, only used by self()
-        Thread( ){}
-
     public:
-        /// create a new thread with a function pointer
-        /**
-         *  @see pthread_init
-         *  @param start    routine that the new thread executes
-         *  @param arg      pointer to data that is passed to the routine
-         */
-        Thread( routine_t start, void* arg );
+        /// start a new thread storing the id in m_data
+        int launch( routine_t start, void* arg );
 
         /// join a thread, calling thread blocks until this thread has exited
         /**

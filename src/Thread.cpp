@@ -33,10 +33,10 @@ namespace pthreads
 {
 
 
-Thread::Thread( routine_t start, void* arg )
+int Thread::launch( routine_t start, void* arg )
 {
     pthread_t* thread = reinterpret_cast<pthread_t*>(m_data);
-    pthread_create(thread,0,start,arg);
+    return pthread_create(thread,0,start,arg);
 }
 
 int Thread::join(void** value_ptr)

@@ -58,10 +58,10 @@ class Mutex
         friend class Condition;
 
         /// calls pthread_mutex_init
-        Mutex();
+        int init();
 
         /// calls pthread_mutex_destroy
-        ~Mutex();
+        int destroy();
 
         /// change the priority ceiling
         int setPriorityCeiling( int newCeil, int* oldCeil );

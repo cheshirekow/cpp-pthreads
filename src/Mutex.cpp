@@ -40,16 +40,16 @@ ScopedLock::~ScopedLock(  )
     m_mutex.unlock();
 }
 
-Mutex::Mutex()
+int Mutex::init()
 {
     pthread_mutex_t* data = reinterpret_cast<pthread_mutex_t*>(m_data);
-    pthread_mutex_init(data,0);
+    return pthread_mutex_init(data,0);
 }
 
-Mutex::~Mutex()
+int Mutex::destroy()
 {
     pthread_mutex_t* data = reinterpret_cast<pthread_mutex_t*>(m_data);
-    pthread_mutex_destroy(data);
+    return pthread_mutex_destroy(data);
 }
 
 int Mutex::setPriorityCeiling( int newCeil, int* oldCeil )
