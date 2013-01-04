@@ -55,7 +55,11 @@ int main(int argc, char** argv)
 
 
     Thread::Attr attr;
-    attr.set( DETACH_STATE = DETACHED );
+    attr.set( SET_DETACHED );
+    attr << SET_JOINABLE;
+
+    DetachState detach;
+    attr.get( DETACH_STATE, detach );
 
     return 0;
 }

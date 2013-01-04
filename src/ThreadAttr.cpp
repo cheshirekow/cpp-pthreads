@@ -31,15 +31,17 @@
 namespace pthreads
 {
 
-DetachStateDelegate DETACH_STATE;
+const DetachStateAssignment SET_DETACHED(DETACHED);
+const DetachStateAssignment SET_JOINABLE(JOINABLE);
+const DetachStateAccess     DETACH_STATE;
 
-int DetachStateDelegate::set( Thread::Attr& attr_in ) const
+int DetachStateAssignment::set( Thread::Attr& attr_in ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     return pthread_attr_setdetachstate( attr, m_value );
 }
 
-int DetachStateDelegate::get( Thread::Attr& attr_in, DetachState& value ) const
+int DetachStateAccess::get( Thread::Attr& attr_in, DetachState& value ) const
 {
     pthread_attr_t* attr = reinterpret_cast< pthread_attr_t* >(attr_in.m_data);
     int outVal;

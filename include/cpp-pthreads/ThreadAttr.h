@@ -50,31 +50,40 @@ struct Access
     virtual int get( Thread::Attr& attr, T& value ) const=0;
 };
 
+template <typename Enum>
+struct Delegate;
+
 } // namespace attr
 
 
-struct DetachStateDelegate:
-    public attr::Assignment<DetachState>,
-    public attr::Access<DetachState>
+
+struct DetachStateAssignment:
+    public attr::Assignment<DetachState>
 {
     DetachState  m_value;
 
-    virtual ~DetachStateDelegate(){}
+    DetachStateAssignment( DetachState value = DETACHED ):
+        m_value(value)
+    {}
 
-    /// assignment operator returns a copy for thread safety
-    DetachStateDelegate operator=( DetachState value )
-    {
-        DetachStateDelegate other;
-        other.m_value = value;
-        return other;
-    }
+    virtual ~DetachStateAssignment(){}
 
     virtual int set( Thread::Attr& attr ) const;
+};
+
+struct DetachStateAccess:
+    public attr::Access<DetachState>
+{
+    DetachStateAccess(){}
+    virtual ~DetachStateAccess(){}
     virtual int get( Thread::Attr& attr, DetachState& value )const;
 };
 
 
-extern DetachStateDelegate DETACH_STATE;
+
+extern const DetachStateAssignment SET_DETACHED;
+extern const DetachStateAssignment SET_JOINABLE;
+extern const DetachStateAccess     DETACH_STATE;
 
 
 class Thread::Attr
@@ -83,7 +92,8 @@ class Thread::Attr
         char m_data [ sizeOf::attr ];
 
     public:
-        friend class DetachStateDelegate;
+        friend class DetachStateAssignment;
+        friend class DetachStateAccess;
 
         /// pthread_attr_init
         int init();
@@ -105,21 +115,22 @@ class Thread::Attr
             return assignment.set(*this);
         }
 
-        /// retrieve an attribute, unsafe, error is ignored
-        template <typename T>
-        T operator[]( const attr::Access<T>& access )
-        {
-            T value;
-            access.get( *this, value );
-            return value;
-        }
-
         /// safe value retrieval
         template <typename T>
         int get( const attr::Access<T>& access, T& value )
         {
             return access.get( *this, value );
         }
+
+        /// stream assignment, unsafe, ignores error values returned
+        template <typename T>
+        Thread::Attr& operator << ( const attr::Assignment<T>& assignment )
+        {
+            assignment.set(*this);
+            return *this;
+        }
+
+
 
 };
 
