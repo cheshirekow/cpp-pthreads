@@ -104,6 +104,7 @@ int main(int argc, char** argv)
 
 (*out) << "typedef unsigned int uint;\n";
 (*out) << "const uint pthread = " << sizeof(pthread_t) << ";\n";
+WRITE( attr );
 WRITE( mutex );
 WRITE( mutexattr );
 WRITE( cond );

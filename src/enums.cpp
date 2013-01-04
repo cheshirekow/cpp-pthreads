@@ -41,8 +41,7 @@ int DetachStateMap[] =
 
 DEFINEMAP( DetachState );
 
-
-}
+}   // namespace pthreads
 
 
 

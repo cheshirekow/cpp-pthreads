@@ -33,6 +33,7 @@ namespace sizeOf   {
 
 typedef unsigned int uint;
 const uint pthread = 8;
+const uint attr = 56;
 const uint mutex = 40;
 const uint mutexattr = 4;
 const uint cond = 48;

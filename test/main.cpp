@@ -53,6 +53,10 @@ int main(int argc, char** argv)
     for(int i=0; i < nThreads; i++)
         threads[i].join();
 
+
+    Thread::Attr attr;
+    attr.set( DETACH_STATE = DETACHED );
+
     return 0;
 }
 

@@ -28,9 +28,11 @@
 #define CPP_PTHREADS_THREAD_H_
 
 #include <cpp-pthreads/sizes.h>
+#include <sched.h>
 
 namespace pthreads
 {
+
 
 template <class T>
 void* callCallable( void* obj )
@@ -44,6 +46,7 @@ class Thread
 {
     public:
         typedef void *(*routine_t)(void*);
+        class Attr;
 
     private:
         char m_data[ sizeOf::pthread ];

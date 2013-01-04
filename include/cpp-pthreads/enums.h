@@ -27,18 +27,53 @@
 #ifndef CPP_PTHREADS_ENUMS_H_
 #define CPP_PTHREADS_ENUMS_H_
 
-namespace pthreads{
 
+namespace pthreads {
+
+/// controls whether a thread is created in a detached state, meaning that the
+/// thread will destroy itself when it finished running, and cannot be joined
 enum DetachState
 {
     DETACHED=0,
-    JOINABLE
+    JOINABLE=1
 };
+
+
+/// determines whether a thread inherits it's scheduling policy from the
+/// creating thread or if it uses the policy stored in the attribute object
+enum InheritSched
+{
+    INHERIT = 0,
+    EXPLICI = 1
+};
+
+/// if multiple threads are waiting on the same mutex, the Scheduling Policy
+/// determines the order in which they are aquired
+enum SchedPolicy
+{
+    OTHER = 0,
+    FIFO  = 1,
+    RR    = 2,
+    BATCH = 3,
+    IDLE  = 4,
+};
+
+/// Signifies process or system scheduling contention scope
+enum Scope
+{
+    SYSTEM  =0,
+    PROCESS =1
+};
+
 
 
 /// returns pointer to a map from enums to pthread enums (ints)
 template <typename Enum>
 int* getEnumMap();
+
+/// returns pointer to a map from enums to pthread enums (ints)
+template <typename Enum>
+int* getReverseMap();
 
 /// returns the pthread integer enumerator that corresponds to the
 /// specified value
@@ -48,7 +83,15 @@ int mapEnum( Enum val )
     return getEnumMap<Enum>()[val];
 }
 
+/// returns the pthread integer enumerator that corresponds to the
+/// specified value
+template <typename Enum>
+Enum getEnum( int val )
+{
+    return getReverseMap<Enum>()[val];
 }
+
+} // namespace pthreads
 
 
 

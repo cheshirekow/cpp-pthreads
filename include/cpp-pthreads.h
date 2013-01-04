@@ -31,6 +31,7 @@
 #include <cpp-pthreads/Condition.h>
 #include <cpp-pthreads/Mutex.h>
 #include <cpp-pthreads/Thread.h>
+#include <cpp-pthreads/ThreadAttr.h>
 
 
 

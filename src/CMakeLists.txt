@@ -22,7 +22,8 @@ if( THREADS_FOUND )
                     RefCount.cpp
                     Mutex.cpp
                     Condition.cpp
-                    Thread.cpp ) 
+                    Thread.cpp
+                    ThreadAttr.cpp ) 
                     
     add_dependencies( cpp_pthreads do_makeSize_h ) 
 
