@@ -148,8 +148,8 @@ class Thread::Attr
 
 
 
-template<>
-struct Delegate<DetachState>
+template <typename T>
+struct Delegate
 {
     Thread::Attr&   m_attr;
 
@@ -157,43 +157,20 @@ struct Delegate<DetachState>
         m_attr(attr)
     {}
 
-    operator DetachState()
+    operator T()
     {
-        DetachState value;
-        m_attr.get(DETACH_STATE,value);
+        T value;
+        Access<T> access;
+        m_attr.get(access,value);
         return value;
     }
 
-    int operator=( DetachState value )
+    int operator=( T value )
     {
-        Assignment<DetachState> assignment(value);
+        Assignment<T> assignment(value);
         return m_attr.set(assignment);
     }
 };
-
-template<>
-struct Delegate<InheritSched>
-{
-    Thread::Attr&   m_attr;
-
-    Delegate( Thread::Attr& attr ):
-        m_attr(attr)
-    {}
-
-    operator InheritSched()
-    {
-        InheritSched value;
-        m_attr.get(INHERIT_SCHED,value);
-        return value;
-    }
-
-    int operator=( InheritSched value )
-    {
-        Assignment<InheritSched> assignment(value);
-        return m_attr.set(assignment);
-    }
-};
-
 
 
 
