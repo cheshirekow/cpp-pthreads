@@ -37,30 +37,8 @@
 namespace pthreads {
 
 
-struct GuardSize
-{
-    std::size_t m_data;
 
-    GuardSize( const std::size_t& data ):
-        m_data(data)
-    {}
-
-    GuardSize& operator=( std::size_t data )
-    {
-        m_data = data;
-        return *this;
-    }
-
-    operator std::size_t&()
-    {
-        return m_data;
-    }
-
-    operator const std::size_t&() const
-    {
-        return m_data;
-    }
-};
+typedef TypeWrap<std::size_t,0>   GuardSize;
 
 
 extern const Access<Thread,DetachState>     DETACH_STATE;
