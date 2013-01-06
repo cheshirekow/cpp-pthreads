@@ -36,8 +36,11 @@
 
 namespace pthreads {
 
+/// provides access to the pshared field of a pthread_barrierattr_t
 extern const Access<Barrier,PShared>          B_PSHARED;
 
+/// A simple way of telling Attr<Barrier> that it's storage type
+/// is pthread_barrierattr_t
 template<>
 struct AttrType<Barrier>
 {

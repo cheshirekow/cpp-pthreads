@@ -70,8 +70,11 @@ int main(int argc, char** argv)
 
     DetachState detach;
     InheritSched inherit;
-    attr.get( DETACH_STATE, detach );
-    attr.get( INHERIT_SCHED, inherit );
+    attr.get( detach );
+    attr.get( inherit );
+
+    int guardsize;
+    attr.get( GUARD_SIZE, guardsize );
 
     attr[DETACH_STATE] = DETACHED;
     attr[INHERIT_SCHED]= INHERIT;

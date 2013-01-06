@@ -57,6 +57,12 @@
 
      } // lock goes out of scope and releases the mutex
  @endcode
+
+ *
+ * The cmake script for this library produces a shared library
+ * (libcpp-pthreads.so) and a static library (libcpp-pthreads_static.a). The
+ * install target for the makescript will install the headers, the libraries,
+ * and a cmake find script FindCPPThreads.cmake.
  */
 
 

@@ -32,9 +32,13 @@
 
 namespace pthreads {
 
+/// A key is an identifier used to specify a storage location where the thing
+/// stored is different for each thread
 class Key
 {
     public:
+        /// type of a function which is used to destroy the object if the
+        /// object is not null when the key is destroyed
         typedef void (*Destructor_t)(void*);
 
     private:

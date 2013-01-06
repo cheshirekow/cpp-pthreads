@@ -17,7 +17,7 @@
  *  along with cpp-pthreads.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- *  @file   include/cpp-pthreads/CondAttr.h
+ *  @file   include/cpp-pthreads/ConditionAttr.h
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
@@ -37,13 +37,18 @@
 
 namespace pthreads {
 
+/// A unique type which acts just like clockid_t but is distinct in the
+/// eyes of the compiler
 typedef TypeWrap<clockid_t,0>    Clock;
 
-
+/// provides access to the clock field of a pthread_condrattr_t
 extern const Access<Condition,Clock>    CLOCK;
+
+/// provides access to the pshared field of a pthread_condrattr_t
 extern const Access<Condition,PShared>  C_PSHARED;
 
-
+/// A simple way of telling Attr<Condition> that it's storage type
+/// is pthread_condattr_t
 template<>
 struct AttrType<Condition>
 {

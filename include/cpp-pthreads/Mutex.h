@@ -34,15 +34,32 @@ namespace pthreads {
 
 class Mutex;
 
-/// provides a pointer to a locked mutex and unlocks the mutex when destroyed
+/// Points to a locked mutex and unlocks the mutex when destroyed
+/**
+ *  Usage:
+ *  @code
+    Mutex mutex;
+
+    {
+        // constructor locks the mutex here
+        ScopedLock lock(mutex);
+
+        // ... (do something)
+    } // when lock goes out of scope the destructor releases the lock on the
+      // mutex
+ @endcode
+ */
 class ScopedLock
 {
     private:
+        ///< the mutex being locked
         Mutex&  m_mutex;
 
     public:
+        /// lock the mutex
         explicit ScopedLock( Mutex& mutex );
 
+        /// unlock the mutex
         ~ScopedLock();
 };
 

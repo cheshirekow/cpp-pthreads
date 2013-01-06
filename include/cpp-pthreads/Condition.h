@@ -33,28 +33,36 @@
 
 namespace pthreads {
 
+
+/// Allows multiple threads to wait until a condition is satisfied
+/**
+ *  @note   A condition variable is always used with a mutex. When a condition
+ *          is signaled, one thread that is currently waiting on that
+ *          condition is woken up, and aquires the mutex that associated
+ *          with the wait.
+ */
 class Condition
 {
     private:
         pthread_cond_t m_data;
 
     public:
-        /// calls pthread_cond_init
+        /// calls initializes a condition variable with default attributes
         int init();
 
-        /// calls pthread_cond_init
+        /// initializes a condition variable with the specified attributes
         int init( const Attr<Condition>& attr );
 
-        /// calls pthread_cond_destroy
+        /// destroys a condition variable
         int destroy();
 
-        /// calls pthread_cond_broadcast
+        /// signals all threads waiting on the condition
         int broadcast();
 
-        /// calls pthread_cond_signal
+        /// signals one thread waiting on the condition
         int signal();
 
-        /// calls pthread_cond_wait
+        /// called by a thread that wishes to wait on this condition
         int wait( Mutex& mutex );
 
 };

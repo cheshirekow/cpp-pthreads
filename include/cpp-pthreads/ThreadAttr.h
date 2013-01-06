@@ -36,10 +36,15 @@
 namespace pthreads {
 
 
-
+/// A unique type which acts just like size_t but is distinct in the
+/// eyes of the compiler
 typedef TypeWrap<std::size_t,0>   GuardSize;
+
+/// A unique type which acts just like size_t but is distinct in the
+/// eyes of the compiler
 typedef TypeWrap<std::size_t,1>   StackSize;
 
+/// Simply encapsulates the stack address and size in a single object
 struct Stack
 {
     void*       addr;
@@ -51,14 +56,30 @@ struct Stack
     {}
 };
 
+/// provides access to the detachstate field of a pthread_attr_t
 extern const Access<Thread,DetachState>     DETACH_STATE;
+
+/// provides access to the inheritsched field of a pthread_attr_t
 extern const Access<Thread,InheritSched>    INHERIT_SCHED;
+
+/// provides access to the schedpolicy field of a pthread_attr_t
 extern const Access<Thread,SchedPolicy>     SCHED_POLICY;
+
+/// provides access to the scope field of a pthread_attr_t
 extern const Access<Thread,Scope>           SCOPE;
+
+/// provides access to the guardsize field of a pthread_attr_t
 extern const Access<Thread,GuardSize>       GUARD_SIZE;
-extern const Access<Thread,Stack>           STACK_ADDR;
+
+/// provides access to the stack field of a pthread_attr_t, including
+/// stack address and size
+extern const Access<Thread,Stack>           STACK;
+
+/// provides access to the stacksize field of a pthread_attr_t
 extern const Access<Thread,StackSize>       STACK_SIZE;
 
+/// A simple way of telling Attr<Thread> that it's storage type
+/// is pthread_attr_t
 template<>
 struct AttrType<Thread>
 {

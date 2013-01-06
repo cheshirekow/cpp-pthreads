@@ -34,6 +34,8 @@ namespace pthreads
 {
 
 
+/// function which invokes a callable object when that object is passed
+/// to launch a thread
 template <class T>
 void* callCallable( void* obj )
 {
@@ -41,10 +43,11 @@ void* callCallable( void* obj )
     return obj;
 }
 
-/// interface for a thread
+/// A thread... presumably you know what this is
 class Thread
 {
     public:
+        /// type of a function which the thread will invoke
         typedef void *(*routine_t)(void*);
 
     private:
@@ -57,22 +60,28 @@ class Thread
         /// start a new thread using the specified attributes
         int launch( const Attr<Thread>& attr, routine_t start, void* arg=0 );
 
+        /// start a new thread which calls the callable object
+        template <typename Callable>
+        int launch( Callable* obj )
+        {
+            return launch( callCallable<Callable>, obj );
+        }
+
+        /// start a new thread which calls the collable object and has the
+        /// specified attributes
+        template <typename Callable>
+        int launch( const Attr<Thread>& attr, Callable* obj )
+        {
+            return launch( attr, callCallable<Callable>, obj );
+        }
+
         /// join a thread, calling thread blocks until this thread has exited
-        /**
-         *  @see pthread_join
-         */
         int join( void** value_ptr=0 );
 
         /// detach a thread, the thread will be destroyed when it exits
-        /**
-         *  @see pthread_detach
-         */
         int detach();
 
         /// cancel this thread
-        /**
-         *  @see pthread_cancel
-         */
         int cancel();
 
         /// send a signal to the thread
@@ -82,21 +91,10 @@ class Thread
         bool operator==( const Thread& other );
 
         /// terminates the calling thread
-        /**
-         *  @see pthread_exit
-         */
         static void exit( void* value_ptr );
 
         /// get a reference to the calling thread itself
         static Thread self();
-
-        /// create a thread from a callable object, i.e. functor, the return
-        /// value is obj itself so it should provide access to any result
-        template <class T>
-        static Thread create( T* obj )
-        {
-            return Thread( callCallable<T>, obj );
-        }
 };
 
 

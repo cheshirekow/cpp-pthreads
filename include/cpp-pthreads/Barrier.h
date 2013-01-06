@@ -32,22 +32,31 @@
 
 namespace pthreads {
 
+/// A barrier is an object which synchronizes a fixed number of threads at
+/// a specific point.
+/**
+ *  @note   once initialized, threads that wish to synchronize call
+ *          wait() on a barrier. Once @p count threads are waiting on
+ *          the barrier, they will all be released.
+ */
 class Barrier
 {
     private:
         pthread_barrier_t m_data;
 
     public:
-        ///
+        /// initialize a barrier for @p count threads using default attributes
         int init( unsigned count );
 
-        ///
+        /// initialize a barrier for @p count threads using the specified
+        /// attributes
         int init( const Attr<Barrier>& attr, unsigned count );
 
-        ///
+        /// destroy the barrier
         int destroy();
 
-        ///
+        /// called by a thread which wishes to synchronize on the barrier.
+        /// Will block until @p count threads are all wait()ing on the barrier
         int wait(  );
 
 };
