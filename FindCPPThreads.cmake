@@ -15,11 +15,12 @@ find_path(CPPThreads_INCLUDE_DIR
 )
 
 #library
-libfind_library(CPPThreads cpp_pthreads)
+libfind_library(CPPThreads cpp-pthreads)
+libfind_library(CPPThreads_STATIC cpp-pthreads_static)
 
 # Set the include dir variables and the libraries and let libfind_process do the rest.
 # NOTE: Singular variables for this library, plural for libraries this this lib depends on.
 set(CPPThreads_PROCESS_INCLUDES CPPThreads_INCLUDE_DIR)
-set(CPPThreads_PROCESS_LIBS CPPThreads_LIBRARY ${CMAKE_THREAD_LIBS_INIT})
+set(CPPThreads_PROCESS_LIBS CPPThreads_LIBRARY CPPThreads_STATIC_LIBRARY ${CMAKE_THREAD_LIBS_INIT})
 libfind_process(CPPThreads)
 

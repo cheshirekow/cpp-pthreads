@@ -2,11 +2,11 @@ find_package( Threads )
 
 if( THREADS_FOUND )
 
-    add_executable( cpp_pthreads_test 
+    add_executable( cpp-pthreads_test 
                         main.cpp )
 
-    target_link_libraries( cpp_pthreads_test
-                            cpp_pthreads
+    target_link_libraries( cpp-pthreads_test
+                            cpp-pthreads
                             ${CMAKE_THREAD_LIBS_INIT} )
                             
 else()
