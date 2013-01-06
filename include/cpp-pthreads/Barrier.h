@@ -17,7 +17,7 @@
  *  along with cpp-pthreads.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- *  @file   /home/josh/Codes/cpp/cpp-pthreads/include/cpp-pthreads/Barrier.h
+ *  @file   include/cpp-pthreads/Barrier.h
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)

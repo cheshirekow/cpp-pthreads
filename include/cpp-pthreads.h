@@ -17,7 +17,7 @@
  *  along with cpp-pthreads.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- *  @file   /home/josh/Codes/cpp/cpp-pthreads/include/cpp-pthreads.h
+ *  @file   include/cpp-pthreads.h
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
@@ -38,6 +38,8 @@
 #include <cpp-pthreads/Thread.h>
 #include <cpp-pthreads/ThreadAttr.h>
 
+/// Wraps posix-threads (pthreads.h) with object oriented API
+namespace pthreads{}
 
 
 

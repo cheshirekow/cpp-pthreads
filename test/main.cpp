@@ -55,13 +55,18 @@ int main(int argc, char** argv)
 
 
     Attr<Thread> attr;
-    attr << JOINABLE;
-    attr.set( JOINABLE );
-    attr << Stack(0,100)
+
+    // stream assignment test
+    attr << JOINABLE
+         << Stack(0,100)
          << DETACHED
          << EXPLICIT
          << GuardSize(100)
          << SYSTEM;
+
+    // safe assignment test
+    attr.set( JOINABLE );
+    attr.set( GuardSize(100 ) );
 
     DetachState detach;
     InheritSched inherit;

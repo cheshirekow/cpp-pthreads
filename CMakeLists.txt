@@ -26,7 +26,7 @@ configure_file(
     )
 
 # use Jan Woetzel's doxygen doc target
-include("${CMAKE_MODULE_PATH}/TargetDoc.cmake" OPTIONAL)
+include("TargetDoc" OPTIONAL)
 
 install( FILES FindCPPThreads.cmake DESTINATION
         share/cmake-${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}/Modules/ )

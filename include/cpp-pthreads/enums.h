@@ -17,7 +17,7 @@
  *  along with cpp-pthreads.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- *  @file   /home/josh/Codes/cpp/cpp-pthreads/include/cpp-pthreads/enums.h
+ *  @file   include/cpp-pthreads/enums.h
  *
  *  @date   Jan 3, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
@@ -34,8 +34,10 @@ namespace pthreads {
 /// thread will destroy itself when it finished running, and cannot be joined
 enum DetachState
 {
-    DETACHED=0,
-    JOINABLE=1,
+    DETACHED=0, ///< thread is started in a detached state, when thread
+                ///  terminates, memory is automatically freed
+    JOINABLE=1, ///< thread must be join()ed by another thread for memory
+                ///  to be freed
     INVALID_DETACH_STATE
 };
 
@@ -44,8 +46,10 @@ enum DetachState
 /// creating thread or if it uses the policy stored in the attribute object
 enum InheritSched
 {
-    INHERIT  = 0,
-    EXPLICIT = 1,
+    INHERIT  = 0,   ///< thread inherits scheduling policy from creating
+                    ///  thread
+    EXPLICIT = 1,   ///< thread's scheduling policy is explicitly set in
+                    ///  the Attr<Thread> object
     INVALID_INHERIT_SCHED
 };
 
@@ -70,11 +74,12 @@ enum Scope
     INVALID_SCOPE
 };
 
-/// indicates whether or not a condition variable is shared accross processes
+/// indicates whether or not a resource is shared across processes
 enum PShared
 {
-    SHARED,
-    PRIVATE,
+    SHARED,     ///< resource is shared by all processes who have access to
+                ///  the memory containing the resource handle
+    PRIVATE,    ///< resource is private to the creating process
     INVALID_PSHARED
 };
 

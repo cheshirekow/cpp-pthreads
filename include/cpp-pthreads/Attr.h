@@ -17,7 +17,7 @@
  *  along with cpp-pthreads.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- *  @file   /home/josh/Codes/cpp/cpp-pthreads/include/cpp-pthreads/attr.h
+ *  @file   include/cpp-pthreads/Attr.h
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
@@ -31,47 +31,71 @@
 namespace pthreads
 {
 
-/// Attributes object for type @p Base
-/**
- *  For example, Attr<Thread> is the cpp-pthreads object wrapping
- *  pthread_attr_t
- */
+// forward declarations
 template <class Base >              class  Attr;
 template <class Base, typename T>   struct Assignment;
 template <class Base, typename T>   struct Access;
 template <class Base, typename T>   struct Delegate;
 
+/// template used to resolve the pthreads_xxx_t object corresponding to the
+/// Attr<Base> object
 template <class Base>               struct AttrType;
 
 
+
+
+/// assignment delegate, an object which can assign an attribute value to an
+/// attribute object
 template <class Base, typename T>
 struct Assignment
 {
-    T  m_value;
+    T  m_value; ///< storage for the value to be assigned
+
+    /// constructs an assignment object from a value
     Assignment( const T& value ):
         m_value(value)
     {}
 
+    /// sets the attribute value of attr to the value stored in this object
     int set( Attr<Base>& attr ) const;
 };
 
+
+
+
+/// access delegate, an object which can access an attribute value of an
+/// attribute object
 template <class Base, typename T>
 struct Access
 {
     Access(){}
+
+    /// retrieves the attribute value of attr corresponding to @p T
     int get( Attr<Base>& attr, T& value ) const;
 };
 
+
+/// since a template parameter cannot be a friend (until C++-11) this template
+/// simply allows us to work around that limitation
 template <class T>
 struct Friendly
 {
     typedef T type;
 };
 
+
+
+
+/// Attributes object for type @p Base
+/**
+ *  For example, Attr<Thread> is the cpp-pthreads object wrapping
+ *  pthread_attr_t
+ */
 template <class Base>
 class Attr
 {
     private:
+        /// the wrapped pthreads_XXXattr_t object
         typename AttrType<Base>::type m_data;
 
     public:
@@ -80,13 +104,14 @@ class Attr
         template <class Base2, typename T> friend class Delegate;
         friend class Friendly<Base>::type;
 
-        /// initialize the object
+        /// initialize the attribute object
         int init();
 
-        /// destroy the object
+        /// destroy the attribute object
         int destroy();
 
-        /// safe assignment
+        /// safe assignment of an attribute by value, use only for enumerations
+        /// where the type is implied by the value
         template <typename T>
         int set( const T& value)
         {
@@ -94,11 +119,11 @@ class Attr
             return assignment.set(*this);
         }
 
-        /// assign an attribute
+        /// safe assignment by an assignment object, use for generic values,
+        /// i.e. GuardSize which is a size_t
         template <typename T>
-        int operator=( const T& value )
+        int set( const Assignment<Base,T>& assignment)
         {
-            Assignment<Base,T> assignment(value);
             return assignment.set(*this);
         }
 
@@ -128,7 +153,8 @@ class Attr
 };
 
 
-
+/// two-way delegate, may assign or retrieve (unsafely) an attribute value
+/// of an attribute object
 template <class Base, typename T>
 struct Delegate
 {
