@@ -21,7 +21,7 @@
  *
  *  @date   Jan 3, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
- *  @brief  
+ *  @brief  Defines enumerators and constants
  */
 
 #ifndef CPP_PTHREADS_ENUMS_H_

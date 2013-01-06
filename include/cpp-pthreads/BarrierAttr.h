@@ -21,7 +21,7 @@
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
- *  @brief  
+ *  @brief  Specializations for Attr<Barrier>
  */
 
 #ifndef CPP_PTHREADS_BARRIERATTR_H_

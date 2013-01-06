@@ -21,7 +21,7 @@
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
- *  @brief  
+ *  @brief  Definition of Key class
  */
 
 #ifndef CPP_PTHREADS_KEY_H_

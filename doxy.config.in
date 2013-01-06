@@ -10,8 +10,8 @@ ABBREVIATE_BRIEF       =
 ALWAYS_DETAILED_SEC    = YES  
 INLINE_INHERITED_MEMB  = NO  
 FULL_PATH_NAMES        = YES  
-STRIP_FROM_PATH        = ${CMAKE_CURRENT_SOURCE_DIR}/src  
-STRIP_FROM_INC_PATH    = {CMAKE_CURRENT_SOURCE_DIR}/src/  
+STRIP_FROM_PATH        = ${CMAKE_CURRENT_SOURCE_DIR} 
+STRIP_FROM_INC_PATH    = ${CMAKE_CURRENT_SOURCE_DIR}/include
 SHORT_NAMES            = NO  
 JAVADOC_AUTOBRIEF      = NO  
 QT_AUTOBRIEF           = NO  
@@ -73,15 +73,12 @@ WARN_IF_DOC_ERROR      = YES
 WARN_NO_PARAMDOC       = NO  
 WARN_FORMAT            = "$file:$line: $text"  
 WARN_LOGFILE           =  
-INPUT = ${CMAKE_CURRENT_SOURCE_DIR}/src          \
-        ${CMAKE_CURRENT_SOURCE_DIR}/include      \
+INPUT = ${CMAKE_CURRENT_SOURCE_DIR}/include      \
         ${CMAKE_CURRENT_SOURCE_DIR}/docs/pages   \
-        ${CMAKE_CURRENT_BINARY_DIR}/src          \
         ${CMAKE_CURRENT_BINARY_DIR}/include      \
         ${CMAKE_CURRENT_BINARY_DIR}/docs/pages    
 INPUT_ENCODING         = UTF-8  
-FILE_PATTERNS          = *.cpp \
-                         *.h \
+FILE_PATTERNS          = *.h \
                          *.hpp  
 RECURSIVE              = YES  
 EXCLUDE                =  

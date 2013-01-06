@@ -21,7 +21,7 @@
  *
  *  @date   Jan 3, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
- *  @brief  
+ *  @brief  Definition of Thread class
  */
 
 #ifndef CPP_PTHREADS_THREAD_H_

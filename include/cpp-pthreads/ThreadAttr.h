@@ -21,7 +21,7 @@
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
- *  @brief  
+ *  @brief  Specializations for Attr<Thread>
  */
 
 #ifndef CPP_PTHREADS_THREADATTR_H_

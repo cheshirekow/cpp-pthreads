@@ -21,7 +21,7 @@
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
- *  @brief  
+ *  @brief  Main include, simply includes other header files
  */
 
 #ifndef CPP_PTHREADS_H_
