@@ -54,6 +54,9 @@ class Thread
         pthread_t m_data;
 
     public:
+        /// return underlying object
+        pthread_t c_obj(){ return m_data; }
+
         /// start a new thread storing the id in m_data
         int launch( routine_t start, void* arg=0 );
 

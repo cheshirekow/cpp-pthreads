@@ -30,17 +30,48 @@
 
 namespace pthreads {
 
-ScopedLock::ScopedLock( Mutex& mutex ):
+ScopedLock::ScopedLock( Mutex* mutex ):
     m_mutex(mutex)
 {
-    m_mutex.lock();
+    if(m_mutex)
+        mutex->lock();
 }
+
+ScopedLock::ScopedLock( Mutex& mutex ):
+    m_mutex(&mutex)
+{
+    m_mutex->lock();
+}
+
+//ScopedLock::ScopedLock( ScopedLock&& other )
+//{
+//    m_mutex       = other.m_mutex;
+//    other.m_mutex = 0;
+//}
+
 
 ScopedLock::~ScopedLock(  )
 {
-    m_mutex.unlock();
+    if(m_mutex)
+        m_mutex->unlock();
 }
 
+ScopedLock& ScopedLock::operator=( ScopedLock& other )
+{
+    if(m_mutex)
+        m_mutex->unlock();
+    m_mutex       = other.m_mutex;
+    other.m_mutex = 0;
+
+    return *this;
+}
+
+void ScopedLock::swap( ScopedLock& other )
+{
+    Mutex* tmp    = m_mutex;
+    m_mutex       = other.m_mutex;
+    other.m_mutex = tmp;
+}
 
 int Mutex::init()
 {
@@ -83,6 +114,11 @@ int Mutex::trylock()
 {
     pthread_mutex_t* mutex = &m_data;
     return pthread_mutex_trylock(mutex);
+}
+
+ScopedLock Mutex::scopedLock()
+{
+    return this;
 }
 
 int Mutex::unlock()

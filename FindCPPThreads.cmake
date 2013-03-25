@@ -21,7 +21,7 @@ libfind_library(CPPThreads_STATIC cpp-pthreads_static)
 # Set the include dir variables and the libraries and let libfind_process do the rest.
 # NOTE: Singular variables for this library, plural for libraries this this lib depends on.
 set(CPPThreads_PROCESS_INCLUDES CPPThreads_INCLUDE_DIR)
-set(CPPThreads_PROCESS_LIBS CPPThreads_LIBRARY CPPThreads_STATIC_LIBRARY)
+set(CPPThreads_PROCESS_LIBS CPPThreads_LIBRARY)
 libfind_process(CPPThreads)
 set(CPPThreads_LIBRARIES ${CPPThreads_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} )
 

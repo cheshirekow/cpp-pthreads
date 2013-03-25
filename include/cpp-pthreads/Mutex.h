@@ -53,14 +53,29 @@ class ScopedLock
 {
     private:
         ///< the mutex being locked
-        Mutex&  m_mutex;
+        Mutex*  m_mutex;
 
     public:
-        /// lock the mutex
-        explicit ScopedLock( Mutex& mutex );
+        /// default constructor has an empty mutex
+        ScopedLock( Mutex* mutex=0 );
+
+        /// explicit creation, locks the mutex
+        ScopedLock( Mutex& mutex );
+
+        /// move constructor transfers ownership of the lock to the new object
+        //ScopedLock( ScopedLock&& other );
 
         /// unlock the mutex
         ~ScopedLock();
+
+        /// assignment transfers ownership of the lock to the assignee
+        /**
+         *  If the assignee already owns a mutex, that one is unlocked
+         */
+        ScopedLock& operator=( ScopedLock& other );
+
+        /// swaps mutexes with another lock
+        void swap( ScopedLock& other );
 };
 
 /// forward declaration
@@ -95,6 +110,9 @@ class Mutex
 
         /// try to lock the mutex, but dont block
         int trylock();
+
+        /// return a scoped lock
+        ScopedLock scopedLock();
 
         /// unlock the mutex after a successful lock
         int unlock();
