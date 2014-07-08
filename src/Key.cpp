@@ -24,7 +24,7 @@
  *  @brief  
  */
 
-#include <cpp-pthreads/Key.h>
+#include <cpp_pthreads/Key.h>
 #include <pthread.h>
 
 namespace pthreads{

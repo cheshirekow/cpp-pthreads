@@ -1,37 +1,36 @@
-find_package( Threads )
+find_package(Threads)
 
-if( THREADS_FOUND )
+set(LIBRARY_SOURCES
+    enums.cpp
+    Barrier.cpp
+    BarrierAttr.cpp
+    Condition.cpp
+    ConditionAttr.cpp
+    Key.cpp
+    Mutex.cpp
+    MutexAttr.cpp
+    Thread.cpp
+    ThreadAttr.cpp)
 
-    set( LIB_FILES
-            enums.cpp
-            Barrier.cpp
-            BarrierAttr.cpp
-            Condition.cpp
-            ConditionAttr.cpp
-            Key.cpp
-            Mutex.cpp
-            MutexAttr.cpp
-            Thread.cpp
-            ThreadAttr.cpp )
-            
-    add_library( cpp-pthreads SHARED
-                    ${LIB_FILES} )
-                    
-    add_library( cpp-pthreads_static STATIC
-                    ${LIB_FILES} )
-                    
-    install( TARGETS cpp-pthreads cpp-pthreads_static
-                RUNTIME DESTINATION bin
-                LIBRARY DESTINATION lib
-                ARCHIVE DESTINATION lib )
-else()
+if(THREADS_FOUND)
+  add_library(cpp_pthreads_static STATIC ${LIBRARY_SOURCES})
+  add_library(cpp_pthreads_shared SHARED ${LIBRARY_SOURCES})
 
-set( MISSING "" )
+  set_target_properties(
+    cpp_pthreads_static
+    cpp_pthreads_shared
+    PROPERTIES OUTPUT_NAME cpp_pthreads)
+                
+  install(TARGETS 
+    cpp_pthreads_static
+    cpp_pthreads_shared
+    EXPORT CPP_PTHREADS_TARGETS
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib )
+  else()
 
-if( NOT (THREADS_FOUND) )
-    set( MISSING "pthreads" )
-endif()
-
-message( WARNING "missing: ${MISSING}" )
-
+  if(NOT (THREADS_FOUND))
+    message(WARNING "missing pthreads, wont build cpp_pthreads")
+  endif()
 endif()

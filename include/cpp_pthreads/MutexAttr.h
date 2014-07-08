@@ -27,14 +27,15 @@
 #ifndef CPP_PTHREADS_MUTEXATTR_H_
 #define CPP_PTHREADS_MUTEXATTR_H_
 
+#include <pthread.h>
 
-
-#include <cpp-pthreads/enums.h>
-#include <cpp-pthreads/Attr.h>
-#include <cpp-pthreads/Mutex.h>
 #include <cstdarg>
 #include <ctime>
-#include <pthread.h>
+
+#include <cpp_pthreads/enums.h>
+#include <cpp_pthreads/Attr.h>
+#include <cpp_pthreads/Mutex.h>
+
 
 
 namespace pthreads {

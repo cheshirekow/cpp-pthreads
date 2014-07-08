@@ -17,37 +17,51 @@
  *  along with cpp-pthreads.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- *  @file   include/cpp-pthreads/BarrierAttr.h
+ *  @file   include/cpp-pthreads/ConditionAttr.h
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
- *  @brief  Specializations for Attr<Barrier>
+ *  @brief  Specializations for Attr<Condition>
  */
 
-#ifndef CPP_PTHREADS_BARRIERATTR_H_
-#define CPP_PTHREADS_BARRIERATTR_H_
+#ifndef CPP_PTHREADS_CONDITIONATTR_H_
+#define CPP_PTHREADS_CONDITIONATTR_H_
 
-#include <cpp-pthreads/enums.h>
-#include <cpp-pthreads/Attr.h>
-#include <cpp-pthreads/Barrier.h>
+#include <pthread.h>
+
 #include <cstdarg>
 #include <ctime>
-#include <pthread.h>
+
+#include <cpp_pthreads/enums.h>
+#include <cpp_pthreads/Attr.h>
+#include <cpp_pthreads/Condition.h>
+
 
 namespace pthreads {
 
-/// provides access to the pshared field of a pthread_barrierattr_t
-extern const Access<Barrier,PShared>          B_PSHARED;
+/// A unique type which acts just like clockid_t but is distinct in the
+/// eyes of the compiler
+typedef TypeWrap<clockid_t,0>    Clock;
 
-/// A simple way of telling Attr<Barrier> that it's storage type
-/// is pthread_barrierattr_t
+/// provides access to the clock field of a pthread_condrattr_t
+extern const Access<Condition,Clock>    CLOCK;
+
+/// provides access to the pshared field of a pthread_condrattr_t
+extern const Access<Condition,PShared>  C_PSHARED;
+
+/// A simple way of telling Attr<Condition> that it's storage type
+/// is pthread_condattr_t
 template<>
-struct AttrType<Barrier>
+struct AttrType<Condition>
 {
-    typedef pthread_barrierattr_t type;
+    typedef pthread_condattr_t type;
 };
+
+
+
+
 
 }
 
 
-#endif // BARRIERATTR_H_
+#endif // CONDATTR_H_

@@ -26,7 +26,7 @@
 
 
 
-#include <cpp-pthreads/ConditionAttr.h>
+#include <cpp_pthreads/ConditionAttr.h>
 #include <pthread.h>
 
 namespace pthreads

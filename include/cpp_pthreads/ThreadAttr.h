@@ -27,11 +27,14 @@
 #ifndef CPP_PTHREADS_THREADATTR_H_
 #define CPP_PTHREADS_THREADATTR_H_
 
-#include <cpp-pthreads/enums.h>
-#include <cpp-pthreads/Attr.h>
-#include <cpp-pthreads/Thread.h>
-#include <cstdarg>
 #include <pthread.h>
+
+#include <cstdarg>
+
+#include <cpp_pthreads/enums.h>
+#include <cpp_pthreads/Attr.h>
+#include <cpp_pthreads/Thread.h>
+
 
 namespace pthreads {
 

@@ -27,8 +27,9 @@
 #ifndef CPP_PTHREADS_THREAD_H_
 #define CPP_PTHREADS_THREAD_H_
 
-#include <cpp-pthreads/Attr.h>
 #include <pthread.h>
+
+#include <cpp_pthreads/Attr.h>
 
 namespace pthreads
 {

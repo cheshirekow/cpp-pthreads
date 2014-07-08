@@ -1,0 +1,19 @@
+# Config file for the cpp_pthreads package
+# It defines the following variables
+#  CPP_PTHREADS_INCLUDE_DIRS- include directories for cpp_pthreads
+#  CPP_PTHREADS_LIBRARIES   - libraries to link against (lazy)
+#  CPP_PTHREADS_SHARED      - shared library
+#  CPP_PTHREADS_STATIC      - static library
+
+
+# include dir
+set(CPP_PTHREADS_INCLUDE_DIR 
+  "@CMAKE_INSTALL_PREFIX@/include/cpp_pthreads")
+
+# libraries
+include("@CMAKE_INSTALL_PREFIX@/share/cmake/cpp_pthreads_targets.cmake")
+ 
+# These are IMPORTED targets created by cpp_pthreads_targets.cmake
+set(CPP_PTHREADS_STATIC cpp_pthreads_static)
+set(CPP_PTHREADS_SHARED cpp_pthreads_shared)
+set(CPP_PTHREADS_LIBRARIES cpp_pthreads_shared)

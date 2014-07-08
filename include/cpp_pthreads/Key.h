@@ -27,7 +27,6 @@
 #ifndef CPP_PTHREADS_KEY_H_
 #define CPP_PTHREADS_KEY_H_
 
-
 #include <pthread.h>
 
 namespace pthreads {

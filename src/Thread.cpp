@@ -25,8 +25,8 @@
  */
 
 
-#include <cpp-pthreads/Thread.h>
-#include <cpp-pthreads/ThreadAttr.h>
+#include <cpp_pthreads/Thread.h>
+#include <cpp_pthreads/ThreadAttr.h>
 #include <pthread.h>
 #include <signal.h>
 

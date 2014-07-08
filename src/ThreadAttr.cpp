@@ -25,7 +25,7 @@
  */
 
 
-#include <cpp-pthreads/ThreadAttr.h>
+#include <cpp_pthreads/ThreadAttr.h>
 #include <pthread.h>
 
 namespace pthreads

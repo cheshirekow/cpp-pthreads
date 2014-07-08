@@ -24,9 +24,10 @@
  *  @brief  
  */
 
-#include <cpp-pthreads/Barrier.h>
-#include <cpp-pthreads/BarrierAttr.h>
 #include <pthread.h>
+
+#include <cpp_pthreads/Barrier.h>
+#include <cpp_pthreads/BarrierAttr.h>
 
 namespace pthreads {
 
