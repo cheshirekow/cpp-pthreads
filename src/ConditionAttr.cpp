@@ -24,83 +24,57 @@
  *  @brief  
  */
 
-
-
 #include <cpp_pthreads/ConditionAttr.h>
 #include <pthread.h>
 
-namespace pthreads
-{
+namespace pthreads {
 
+const Access<Condition, Clock> CLOCK;
+const Access<Condition, PShared> C_PSHARED;
 
-const Access<Condition,Clock>     CLOCK;
-const Access<Condition,PShared>   C_PSHARED;
-
-
-
-
-template <>
-int Assignment<Condition,Clock>::set( Attr<Condition>& attr_in ) const
-{
-    pthread_condattr_t* attr = &(attr_in.m_data);
-    return pthread_condattr_setclock( attr, m_value );
+template<>
+int Assignment<Condition, Clock>::set(Attr<Condition>& attr_in) const {
+  pthread_condattr_t* attr = &(attr_in.m_data);
+  return pthread_condattr_setclock(attr, m_value);
 }
 
-template <>
-int Access<Condition,Clock>::get( Attr<Condition>& attr_in, Clock& value ) const
-{
-    pthread_condattr_t* attr = &(attr_in.m_data);
-    clockid_t outVal;
-    int returnVal =  pthread_condattr_getclock( attr, &outVal );
-    value = outVal;
-    return returnVal;
+template<>
+int Access<Condition, Clock>::get(Attr<Condition>& attr_in,
+                                  Clock& value) const {
+  pthread_condattr_t* attr = &(attr_in.m_data);
+  clockid_t outVal;
+  int returnVal = pthread_condattr_getclock(attr, &outVal);
+  value = outVal;
+  return returnVal;
 }
 
-
-
-
-template <>
-int Assignment<Condition,PShared>::set( Attr<Condition>& attr_in ) const
-{
-    pthread_condattr_t* attr = &(attr_in.m_data);
-    return pthread_condattr_setpshared( attr, mapEnum(m_value) );
+template<>
+int Assignment<Condition, PShared>::set(Attr<Condition>& attr_in) const {
+  pthread_condattr_t* attr = &(attr_in.m_data);
+  return pthread_condattr_setpshared(attr, mapEnum(m_value));
 }
 
-template <>
-int Access<Condition,PShared>::get( Attr<Condition>& attr_in, PShared& value ) const
-{
-    pthread_condattr_t* attr = &(attr_in.m_data);
-    int outVal;
-    int returnVal =  pthread_condattr_getpshared( attr, &outVal );
-    value = getEnum<PShared>(outVal);
-    return returnVal;
+template<>
+int Access<Condition, PShared>::get(Attr<Condition>& attr_in,
+                                    PShared& value) const {
+  pthread_condattr_t* attr = &(attr_in.m_data);
+  int outVal;
+  int returnVal = pthread_condattr_getpshared(attr, &outVal);
+  value = getEnum<PShared>(outVal);
+  return returnVal;
 }
 
-
-
-
-template <>
-int Attr<Condition>::init()
-{
-    pthread_condattr_t* attr = &(m_data);
-    return pthread_condattr_init( attr );
+template<>
+int Attr<Condition>::init() {
+  pthread_condattr_t* attr = &(m_data);
+  return pthread_condattr_init(attr);
 }
 
-template <>
-int Attr<Condition>::destroy()
-{
-    pthread_condattr_t* attr = &(m_data);
-    return pthread_condattr_destroy( attr );
+template<>
+int Attr<Condition>::destroy() {
+  pthread_condattr_t* attr = &(m_data);
+  return pthread_condattr_destroy(attr);
 }
 
-
-
-}
-
-
-
-
-
-
-
+}  // namespace pthreads
 

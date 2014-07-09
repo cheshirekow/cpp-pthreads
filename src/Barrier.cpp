@@ -31,35 +31,26 @@
 
 namespace pthreads {
 
-int Barrier::init( unsigned count )
-{
-    pthread_barrier_t* barrier = &m_data;
-    return pthread_barrier_init( barrier, 0, count );
+int Barrier::init(unsigned count) {
+  pthread_barrier_t* barrier = &m_data;
+  return pthread_barrier_init(barrier, 0, count);
 }
 
-int Barrier::init( const Attr<Barrier>& attr_in, unsigned count )
-{
-    pthread_barrier_t* barrier = &m_data;
-    const pthread_barrierattr_t* attr = &(attr_in.m_data);
-    return pthread_barrier_init( barrier, 0, count );
+int Barrier::init(const Attr<Barrier>& attr_in, unsigned count) {
+  pthread_barrier_t* barrier = &m_data;
+  const pthread_barrierattr_t* attr = &(attr_in.m_data);
+  return pthread_barrier_init(barrier, 0, count);
 }
 
-int Barrier::destroy()
-{
-    pthread_barrier_t* barrier = &m_data;
-    return pthread_barrier_destroy( barrier );
+int Barrier::destroy() {
+  pthread_barrier_t* barrier = &m_data;
+  return pthread_barrier_destroy(barrier);
 }
 
-int Barrier::wait()
-{
-    pthread_barrier_t* barrier = &m_data;
-    return pthread_barrier_wait( barrier );
+int Barrier::wait() {
+  pthread_barrier_t* barrier = &m_data;
+  return pthread_barrier_wait(barrier);
 }
 
-
-}
-
-
-
-
+}  // namespace pthreads
 

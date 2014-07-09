@@ -30,110 +30,81 @@
 
 namespace pthreads {
 
-ScopedLock::ScopedLock( Mutex* mutex ):
-    m_mutex(mutex)
-{
-    if(m_mutex)
-        mutex->lock();
+ScopedLock::ScopedLock(Mutex* mutex)
+    : m_mutex(mutex) {
+  if (m_mutex)
+    mutex->lock();
 }
 
-ScopedLock::ScopedLock( Mutex& mutex ):
-    m_mutex(&mutex)
-{
-    m_mutex->lock();
+ScopedLock::ScopedLock(Mutex& mutex)
+    : m_mutex(&mutex) {
+  m_mutex->lock();
 }
 
-//ScopedLock::ScopedLock( ScopedLock&& other )
-//{
-//    m_mutex       = other.m_mutex;
-//    other.m_mutex = 0;
-//}
-
-
-ScopedLock::~ScopedLock(  )
-{
-    if(m_mutex)
-        m_mutex->unlock();
+ScopedLock::~ScopedLock() {
+  if (m_mutex)
+    m_mutex->unlock();
 }
 
-ScopedLock& ScopedLock::operator=( ScopedLock& other )
-{
-    if(m_mutex)
-        m_mutex->unlock();
-    m_mutex       = other.m_mutex;
-    other.m_mutex = 0;
+ScopedLock& ScopedLock::operator=(ScopedLock& other) {
+  if (m_mutex)
+    m_mutex->unlock();
+  m_mutex = other.m_mutex;
+  other.m_mutex = 0;
 
-    return *this;
+  return *this;
 }
 
-void ScopedLock::swap( ScopedLock& other )
-{
-    Mutex* tmp    = m_mutex;
-    m_mutex       = other.m_mutex;
-    other.m_mutex = tmp;
+void ScopedLock::swap(ScopedLock& other) {
+  Mutex* tmp = m_mutex;
+  m_mutex = other.m_mutex;
+  other.m_mutex = tmp;
 }
 
-int Mutex::init()
-{
-    pthread_mutex_t* mutex = &m_data;
-    return pthread_mutex_init(mutex,0);
+int Mutex::init() {
+  pthread_mutex_t* mutex = &m_data;
+  return pthread_mutex_init(mutex, 0);
 }
 
-int Mutex::init( const Attr<Mutex>& attr_in )
-{
-    pthread_mutex_t* mutex = &m_data;
-    const pthread_mutexattr_t* attr = &(attr_in.m_data);
-    return pthread_mutex_init(mutex,attr);
+int Mutex::init(const Attr<Mutex>& attr_in) {
+  pthread_mutex_t* mutex = &m_data;
+  const pthread_mutexattr_t* attr = &(attr_in.m_data);
+  return pthread_mutex_init(mutex, attr);
 }
 
-int Mutex::destroy()
-{
-    pthread_mutex_t* mutex = &m_data;
-    return pthread_mutex_destroy(mutex);
+int Mutex::destroy() {
+  pthread_mutex_t* mutex = &m_data;
+  return pthread_mutex_destroy(mutex);
 }
 
-int Mutex::setPriorityCeiling( int newCeil, int* oldCeil )
-{
-    pthread_mutex_t* mutex = &m_data;
-    return pthread_mutex_setprioceiling(mutex,newCeil,oldCeil);
+int Mutex::setPriorityCeiling(int newCeil, int* oldCeil) {
+  pthread_mutex_t* mutex = &m_data;
+  return pthread_mutex_setprioceiling(mutex, newCeil, oldCeil);
 }
 
-int Mutex::getPriorityCeiling( int& ceil )
-{
-    pthread_mutex_t* mutex = &m_data;
-    return pthread_mutex_getprioceiling(mutex,&ceil);
+int Mutex::getPriorityCeiling(int& ceil) {
+  pthread_mutex_t* mutex = &m_data;
+  return pthread_mutex_getprioceiling(mutex, &ceil);
 }
 
-int Mutex::lock()
-{
-    pthread_mutex_t* mutex = &m_data;
-    return pthread_mutex_lock(mutex);
+int Mutex::lock() {
+  pthread_mutex_t* mutex = &m_data;
+  return pthread_mutex_lock(mutex);
 }
 
-int Mutex::trylock()
-{
-    pthread_mutex_t* mutex = &m_data;
-    return pthread_mutex_trylock(mutex);
+int Mutex::trylock() {
+  pthread_mutex_t* mutex = &m_data;
+  return pthread_mutex_trylock(mutex);
 }
 
-ScopedLock Mutex::scopedLock()
-{
-    return this;
+ScopedLock Mutex::scopedLock() {
+  return this;
 }
 
-int Mutex::unlock()
-{
-    pthread_mutex_t* mutex = &m_data;
-    return pthread_mutex_unlock(mutex);
+int Mutex::unlock() {
+  pthread_mutex_t* mutex = &m_data;
+  return pthread_mutex_unlock(mutex);
 }
 
 }
-
-
-
-
-
-
-
-
 

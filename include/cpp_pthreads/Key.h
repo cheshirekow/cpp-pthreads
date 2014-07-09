@@ -33,51 +33,35 @@ namespace pthreads {
 
 /// A key is an identifier used to specify a storage location where the thing
 /// stored is different for each thread
-class Key
-{
-    public:
-        /// type of a function which is used to destroy the object if the
-        /// object is not null when the key is destroyed
-        typedef void (*Destructor_t)(void*);
+class Key {
+ public:
+  /// type of a function which is used to destroy the object if the
+  /// object is not null when the key is destroyed
+  typedef void (*Destructor_t)(void*);
 
-    private:
-        pthread_key_t m_data;
+ private:
+  pthread_key_t m_data;
 
-    public:
-        /// create a key that can be used to identify per-thread specific
-        /// objects
-        /**
-         *  @param  destruct    destructor which is called on any non-null
-         *                      data when this key is destroyed
-         */
-        int create(Destructor_t destruct = 0);
+ public:
+  /// create a key that can be used to identify per-thread specific
+  /// objects
+  /**
+   *  @param  destruct    destructor which is called on any non-null
+   *                      data when this key is destroyed
+   */
+  int create(Destructor_t destruct = 0);
 
-        /// destroy the key, call destructor on data if it is set and data
-        /// is not null
-        int destroy();
+  /// destroy the key, call destructor on data if it is set and data
+  /// is not null
+  int destroy();
 
-        /// return the data associated with this key that belongs to this thread
-        void* getSpecific();
+  /// return the data associated with this key that belongs to this thread
+  void* getSpecific();
 
-        /// set this threads data in the box associated with this key
-        int setSpecific( void* value );
+  /// set this threads data in the box associated with this key
+  int setSpecific(void* value);
 };
 
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}  // namespace pthreads
 
 #endif // KEY_H_

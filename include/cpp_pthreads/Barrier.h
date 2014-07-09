@@ -39,30 +39,27 @@ namespace pthreads {
  *          wait() on a barrier. Once @p count threads are waiting on
  *          the barrier, they will all be released.
  */
-class Barrier
-{
-    private:
-        pthread_barrier_t m_data;
+class Barrier {
+ private:
+  pthread_barrier_t m_data;
 
-    public:
-        /// initialize a barrier for @p count threads using default attributes
-        int init( unsigned count );
+ public:
+  /// initialize a barrier for @p count threads using default attributes
+  int init(unsigned count);
 
-        /// initialize a barrier for @p count threads using the specified
-        /// attributes
-        int init( const Attr<Barrier>& attr, unsigned count );
+  /// initialize a barrier for @p count threads using the specified
+  /// attributes
+  int init(const Attr<Barrier>& attr, unsigned count);
 
-        /// destroy the barrier
-        int destroy();
+  /// destroy the barrier
+  int destroy();
 
-        /// called by a thread which wishes to synchronize on the barrier.
-        /// Will block until @p count threads are all wait()ing on the barrier
-        int wait(  );
+  /// called by a thread which wishes to synchronize on the barrier.
+  /// Will block until @p count threads are all wait()ing on the barrier
+  int wait();
 
 };
 
-}
-
-
+}  // namespace pthreads
 
 #endif // BARRIER_H_

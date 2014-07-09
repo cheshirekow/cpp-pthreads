@@ -36,51 +36,31 @@
 #include <cpp_pthreads/Attr.h>
 #include <cpp_pthreads/Mutex.h>
 
-
-
 namespace pthreads {
 
 /// A unique type which acts just like an int but is distinct in the
 /// eyes of the compiler
-typedef TypeWrap<int,0> PriorityCeiling;
+typedef TypeWrap<int, 0> PriorityCeiling;
 
 /// provides access to the prioceil field of a pthread_mutexattr_t
-extern const Access<Mutex,PriorityCeiling>  PRIORITY_CEILING;
+extern const Access<Mutex, PriorityCeiling> PRIORITY_CEILING;
 
 /// provides access to the protocol field of a pthread_mutexattr_t
-extern const Access<Mutex,Protocol>         PROTOCOL;
+extern const Access<Mutex, Protocol> PROTOCOL;
 
 /// provides access to the pshared field of a pthread_mutexattr_t
-extern const Access<Mutex,PShared>          M_PSHARED;
+extern const Access<Mutex, PShared> M_PSHARED;
 
 /// provides access to the type field of a pthread_mutexattr_t
-extern const Access<Mutex,Type>             TYPE;
+extern const Access<Mutex, Type> TYPE;
 
 /// A simple way of telling Attr<Mutex> that it's storage type
 /// is pthread_mutexattr_t
 template<>
-struct AttrType<Mutex>
-{
-    typedef pthread_mutexattr_t type;
+struct AttrType<Mutex> {
+  typedef pthread_mutexattr_t type;
 };
 
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
+}  // namespace pthreads
 
 #endif // MUTEXATTR_H_

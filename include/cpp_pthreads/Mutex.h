@@ -31,7 +31,6 @@
 
 #include <cpp_pthreads/Attr.h>
 
-
 namespace pthreads {
 
 class Mutex;
@@ -40,100 +39,84 @@ class Mutex;
 /**
  *  Usage:
  *  @code
-    Mutex mutex;
+ Mutex mutex;
 
-    {
-        // constructor locks the mutex here
-        ScopedLock lock(mutex);
+ {
+ // constructor locks the mutex here
+ ScopedLock lock(mutex);
 
-        // ... (do something)
-    } // when lock goes out of scope the destructor releases the lock on the
-      // mutex
+ // ... (do something)
+ } // when lock goes out of scope the destructor releases the lock on the
+ // mutex
  @endcode
  */
-class ScopedLock
-{
-    private:
-        ///< the mutex being locked
-        Mutex*  m_mutex;
+class ScopedLock {
+ private:
+  ///< the mutex being locked
+  Mutex* m_mutex;
 
-    public:
-        /// default constructor has an empty mutex
-        ScopedLock( Mutex* mutex=0 );
+ public:
+  /// default constructor has an empty mutex
+  ScopedLock(Mutex* mutex = 0);
 
-        /// explicit creation, locks the mutex
-        ScopedLock( Mutex& mutex );
+  /// explicit creation, locks the mutex
+  ScopedLock(Mutex& mutex);
 
-        /// move constructor transfers ownership of the lock to the new object
-        //ScopedLock( ScopedLock&& other );
+  /// move constructor transfers ownership of the lock to the new object
+  //ScopedLock( ScopedLock&& other );
 
-        /// unlock the mutex
-        ~ScopedLock();
+  /// unlock the mutex
+  ~ScopedLock();
 
-        /// assignment transfers ownership of the lock to the assignee
-        /**
-         *  If the assignee already owns a mutex, that one is unlocked
-         */
-        ScopedLock& operator=( ScopedLock& other );
+  /// assignment transfers ownership of the lock to the assignee
+  /**
+   *  If the assignee already owns a mutex, that one is unlocked
+   */
+  ScopedLock& operator=(ScopedLock& other);
 
-        /// swaps mutexes with another lock
-        void swap( ScopedLock& other );
+  /// swaps mutexes with another lock
+  void swap(ScopedLock& other);
 };
 
 /// forward declaration
 class Condition;
 
 /// a mutual exclusion lock
-class Mutex
-{
-    private:
-        pthread_mutex_t m_data;
+class Mutex {
+ private:
+  pthread_mutex_t m_data;
 
-    public:
-        friend class Condition;
+ public:
+  friend class Condition;
 
-        /// calls pthread_mutex_init
-        int init();
+  /// calls pthread_mutex_init
+  int init();
 
-        /// calls pthread_mutex_init with an attribute object
-        int init( const Attr<Mutex>& attr );
+  /// calls pthread_mutex_init with an attribute object
+  int init(const Attr<Mutex>& attr);
 
-        /// calls pthread_mutex_destroy
-        int destroy();
+  /// calls pthread_mutex_destroy
+  int destroy();
 
-        /// change the priority ceiling
-        int setPriorityCeiling( int newCeil, int* oldCeil );
+  /// change the priority ceiling
+  int setPriorityCeiling(int newCeil, int* oldCeil);
 
-        /// get the priority ceiling
-        int getPriorityCeiling( int& );
+  /// get the priority ceiling
+  int getPriorityCeiling(int&);
 
-        /// lock the mutex, block until succeed
-        int lock();
+  /// lock the mutex, block until succeed
+  int lock();
 
-        /// try to lock the mutex, but dont block
-        int trylock();
+  /// try to lock the mutex, but dont block
+  int trylock();
 
-        /// return a scoped lock
-        ScopedLock scopedLock();
+  /// return a scoped lock
+  ScopedLock scopedLock();
 
-        /// unlock the mutex after a successful lock
-        int unlock();
+  /// unlock the mutex after a successful lock
+  int unlock();
 };
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif // MUTEX_H_

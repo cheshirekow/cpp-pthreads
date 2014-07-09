@@ -35,79 +35,56 @@
 #include <cpp_pthreads/Attr.h>
 #include <cpp_pthreads/Thread.h>
 
-
 namespace pthreads {
 
+/// A unique type which acts just like size_t but is distinct in the
+/// eyes of the compiler
+typedef TypeWrap<std::size_t, 0> GuardSize;
 
 /// A unique type which acts just like size_t but is distinct in the
 /// eyes of the compiler
-typedef TypeWrap<std::size_t,0>   GuardSize;
-
-/// A unique type which acts just like size_t but is distinct in the
-/// eyes of the compiler
-typedef TypeWrap<std::size_t,1>   StackSize;
+typedef TypeWrap<std::size_t, 1> StackSize;
 
 /// Simply encapsulates the stack address and size in a single object
-struct Stack
-{
-    void*       addr;
-    std::size_t size;
+struct Stack {
+  void* addr;
+  std::size_t size;
 
-    Stack( void* addr=0, std::size_t size=0):
-        addr(addr),
-        size(size)
-    {}
+  Stack(void* addr = 0, std::size_t size = 0)
+      : addr(addr),
+        size(size) {
+  }
 };
 
 /// provides access to the detachstate field of a pthread_attr_t
-extern const Access<Thread,DetachState>     DETACH_STATE;
+extern const Access<Thread, DetachState> DETACH_STATE;
 
 /// provides access to the inheritsched field of a pthread_attr_t
-extern const Access<Thread,InheritSched>    INHERIT_SCHED;
+extern const Access<Thread, InheritSched> INHERIT_SCHED;
 
 /// provides access to the schedpolicy field of a pthread_attr_t
-extern const Access<Thread,SchedPolicy>     SCHED_POLICY;
+extern const Access<Thread, SchedPolicy> SCHED_POLICY;
 
 /// provides access to the scope field of a pthread_attr_t
-extern const Access<Thread,Scope>           SCOPE;
+extern const Access<Thread, Scope> SCOPE;
 
 /// provides access to the guardsize field of a pthread_attr_t
-extern const Access<Thread,GuardSize>       GUARD_SIZE;
+extern const Access<Thread, GuardSize> GUARD_SIZE;
 
 /// provides access to the stack field of a pthread_attr_t, including
 /// stack address and size
-extern const Access<Thread,Stack>           STACK;
+extern const Access<Thread, Stack> STACK;
 
 /// provides access to the stacksize field of a pthread_attr_t
-extern const Access<Thread,StackSize>       STACK_SIZE;
+extern const Access<Thread, StackSize> STACK_SIZE;
 
 /// A simple way of telling Attr<Thread> that it's storage type
 /// is pthread_attr_t
 template<>
-struct AttrType<Thread>
-{
-    typedef pthread_attr_t type;
+struct AttrType<Thread> {
+  typedef pthread_attr_t type;
 };
 
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif // THREADATTR_H_

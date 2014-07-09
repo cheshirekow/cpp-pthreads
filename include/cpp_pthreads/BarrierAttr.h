@@ -36,21 +36,18 @@
 #include <cpp_pthreads/Attr.h>
 #include <cpp_pthreads/Barrier.h>
 
-
 namespace pthreads {
 
 /// provides access to the pshared field of a pthread_barrierattr_t
-extern const Access<Barrier,PShared>          B_PSHARED;
+extern const Access<Barrier, PShared> B_PSHARED;
 
 /// A simple way of telling Attr<Barrier> that it's storage type
 /// is pthread_barrierattr_t
 template<>
-struct AttrType<Barrier>
-{
-    typedef pthread_barrierattr_t type;
+struct AttrType<Barrier> {
+  typedef pthread_barrierattr_t type;
 };
 
-}
-
+}  // namespace pthreads
 
 #endif // BARRIERATTR_H_

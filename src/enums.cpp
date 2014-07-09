@@ -34,215 +34,185 @@
 
 namespace pthreads {
 
-int DetachStateMap[] =
-{
-    PTHREAD_CREATE_DETACHED,
-    PTHREAD_CREATE_JOINABLE
+int DetachStateMap[] = {
+  PTHREAD_CREATE_DETACHED,
+  PTHREAD_CREATE_JOINABLE
 };
 
-int InheritSchedMap[] =
-{
-    PTHREAD_INHERIT_SCHED,
-    PTHREAD_EXPLICIT_SCHED
+int InheritSchedMap[] = {
+  PTHREAD_INHERIT_SCHED,
+  PTHREAD_EXPLICIT_SCHED
 };
 
-int SchedPolicyMap[] =
-{
-    SCHED_OTHER,
-    SCHED_FIFO,
-    SCHED_RR,
+int SchedPolicyMap[] = {
+  SCHED_OTHER,
+  SCHED_FIFO,
+  SCHED_RR,
 #ifdef SCHED_BATCH
-    SCHED_BATCH,
+  SCHED_BATCH,
 #else
-    -1,
+  -1,
 #endif
 #ifdef SCHED_IDLE
-    SCHED_IDLE,
+  SCHED_IDLE,
 #else
-    -1,
+  -1,
 #endif
 #ifdef SCHED_SPORADIC
-    SCHED_SPORADIC,
+  SCHED_SPORADIC,
 #else
-    -1,
+  -1,
 #endif
 };
 
-int ScopeMap[] =
-{
-    PTHREAD_SCOPE_SYSTEM,
-    PTHREAD_SCOPE_PROCESS
+int ScopeMap[] = {
+  PTHREAD_SCOPE_SYSTEM,
+  PTHREAD_SCOPE_PROCESS
 };
 
-int PSharedMap[] =
-{
-    PTHREAD_PROCESS_SHARED,
-    PTHREAD_PROCESS_PRIVATE
+int PSharedMap[] = {
+  PTHREAD_PROCESS_SHARED,
+  PTHREAD_PROCESS_PRIVATE
 };
 
-int ProtocolMap[] =
-{
-    PTHREAD_PRIO_NONE,
-    PTHREAD_PRIO_INHERIT,
-    PTHREAD_PRIO_PROTECT
+int ProtocolMap[] = {
+  PTHREAD_PRIO_NONE,
+  PTHREAD_PRIO_INHERIT,
+  PTHREAD_PRIO_PROTECT
 };
 
-int TypeMap[] =
-{
-    PTHREAD_MUTEX_NORMAL,
-    PTHREAD_MUTEX_ERRORCHECK,
-    PTHREAD_MUTEX_RECURSIVE,
-    PTHREAD_MUTEX_DEFAULT
+int TypeMap[] = {
+  PTHREAD_MUTEX_NORMAL,
+  PTHREAD_MUTEX_ERRORCHECK,
+  PTHREAD_MUTEX_RECURSIVE,
+  PTHREAD_MUTEX_DEFAULT
 };
 
-DEFINEMAP( DetachState );
-DEFINEMAP( InheritSched );
-DEFINEMAP( SchedPolicy );
-DEFINEMAP( Scope );
-DEFINEMAP( PShared );
-DEFINEMAP( Protocol );
-DEFINEMAP( Type )
+DEFINEMAP(DetachState);
+DEFINEMAP(InheritSched);
+DEFINEMAP(SchedPolicy);
+DEFINEMAP(Scope);
+DEFINEMAP(PShared);
+DEFINEMAP(Protocol);
+DEFINEMAP(Type)
 
-template <> DetachState getEnum<DetachState>(int val)
-{
-    switch(val)
-    {
-        case PTHREAD_CREATE_DETACHED:
-            return DETACHED;
+template<> DetachState getEnum<DetachState>(int val) {
+  switch (val) {
+    case PTHREAD_CREATE_DETACHED:
+      return DETACHED;
 
-        case PTHREAD_CREATE_JOINABLE:
-            return JOINABLE;
+    case PTHREAD_CREATE_JOINABLE:
+      return JOINABLE;
 
-        default:
-            return INVALID_DETACH_STATE;
-    }
+    default:
+      return INVALID_DETACH_STATE;
+  }
 }
 
-template <> InheritSched getEnum<InheritSched>(int val)
-{
-    switch(val)
-    {
-        case PTHREAD_INHERIT_SCHED:
-            return INHERIT;
+template<> InheritSched getEnum<InheritSched>(int val) {
+  switch (val) {
+    case PTHREAD_INHERIT_SCHED:
+      return INHERIT;
 
-        case PTHREAD_EXPLICIT_SCHED:
-            return EXPLICIT;
+    case PTHREAD_EXPLICIT_SCHED:
+      return EXPLICIT;
 
-        default:
-            return INVALID_INHERIT_SCHED;
-    }
+    default:
+      return INVALID_INHERIT_SCHED;
+  }
 }
 
-template <> SchedPolicy getEnum<SchedPolicy>(int val)
-{
-    switch(val)
-    {
-        case SCHED_OTHER:
-            return OTHER;
+template<> SchedPolicy getEnum<SchedPolicy>(int val) {
+  switch (val) {
+    case SCHED_OTHER:
+      return OTHER;
 
-        case SCHED_FIFO:
-            return FIFO;
+    case SCHED_FIFO:
+      return FIFO;
 
-        case SCHED_RR:
-            return RR;
+    case SCHED_RR:
+      return RR;
 
 #ifdef SCHED_BATCH
-        case SCHED_BATCH:
-            return BATCH;
+    case SCHED_BATCH:
+      return BATCH;
 #endif
 #ifdef SCHED_IDLE
-        case SCHED_IDLE:
-            return IDLE;
+    case SCHED_IDLE:
+      return IDLE;
 #endif
 #ifdef SCHED_SPORADIC
-        case SCHED_SPORADIC:
-            return SPORADIC;
+      case SCHED_SPORADIC:
+      return SPORADIC;
 #endif
 
-        default:
-            return INVALID_SCHED_POLICY;
-    }
+    default:
+      return INVALID_SCHED_POLICY;
+  }
 }
 
-template <> Scope getEnum<Scope>(int val)
-{
-    switch(val)
-    {
-        case PTHREAD_SCOPE_SYSTEM:
-            return SYSTEM;
+template<> Scope getEnum<Scope>(int val) {
+  switch (val) {
+    case PTHREAD_SCOPE_SYSTEM:
+      return SYSTEM;
 
-        case PTHREAD_SCOPE_PROCESS:
-            return PROCESS;
+    case PTHREAD_SCOPE_PROCESS:
+      return PROCESS;
 
-        default:
-            return INVALID_SCOPE;
-    }
+    default:
+      return INVALID_SCOPE;
+  }
 }
 
-template <> PShared getEnum<PShared>(int val)
-{
-    switch(val)
-    {
-        case PTHREAD_PROCESS_SHARED:
-            return SHARED;
+template<> PShared getEnum<PShared>(int val) {
+  switch (val) {
+    case PTHREAD_PROCESS_SHARED:
+      return SHARED;
 
-        case PTHREAD_PROCESS_PRIVATE:
-            return PRIVATE;
+    case PTHREAD_PROCESS_PRIVATE:
+      return PRIVATE;
 
-        default:
-            return INVALID_PSHARED;
-    }
+    default:
+      return INVALID_PSHARED;
+  }
 }
 
-template <> Protocol getEnum<Protocol>(int val)
-{
-    switch(val)
-    {
-        case PTHREAD_PRIO_NONE:
-            return PRIO_NONE;
+template<> Protocol getEnum<Protocol>(int val) {
+  switch (val) {
+    case PTHREAD_PRIO_NONE:
+      return PRIO_NONE;
 
-        case PTHREAD_PRIO_INHERIT:
-            return PRIO_INHERIT;
+    case PTHREAD_PRIO_INHERIT:
+      return PRIO_INHERIT;
 
-        case PTHREAD_PRIO_PROTECT:
-            return PRIO_PROTECT;
+    case PTHREAD_PRIO_PROTECT:
+      return PRIO_PROTECT;
 
-        default:
-            return INVALID_PROTOCOL;
-    }
+    default:
+      return INVALID_PROTOCOL;
+  }
 }
 
-template <> Type getEnum<Type>(int val)
-{
-    switch(val)
-    {
-        case PTHREAD_MUTEX_NORMAL:
-            return NORMAL;
+template<> Type getEnum<Type>(int val) {
+  switch (val) {
+    case PTHREAD_MUTEX_NORMAL:
+      return NORMAL;
 
-        case PTHREAD_MUTEX_ERRORCHECK:
-            return ERROR_CHECK;
+    case PTHREAD_MUTEX_ERRORCHECK:
+      return ERROR_CHECK;
 
-        case PTHREAD_MUTEX_RECURSIVE:
-            return RECURSIVE;
+    case PTHREAD_MUTEX_RECURSIVE:
+      return RECURSIVE;
 
 #if PTHREAD_MUTEX_NORMAL != PTHREAD_MUTEX_DEFAULT
-        case PTHREAD_MUTEX_DEFAULT:
-            return DEFAULT;
+    case PTHREAD_MUTEX_DEFAULT:
+      return DEFAULT;
 #endif
 
-        default:
-            return INVALID_TYPE;
-    }
+    default:
+      return INVALID_TYPE;
+  }
 }
 
-
-
 }   // namespace pthreads
-
-
-
-
-
-
-
 

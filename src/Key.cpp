@@ -27,39 +27,27 @@
 #include <cpp_pthreads/Key.h>
 #include <pthread.h>
 
-namespace pthreads{
+namespace pthreads {
 
-int Key::create( Destructor_t destruct)
-{
-    pthread_key_t* key = &m_data;
-    return pthread_key_create(key,destruct);
+int Key::create(Destructor_t destruct) {
+  pthread_key_t* key = &m_data;
+  return pthread_key_create(key, destruct);
 }
 
-int Key::destroy()
-{
-    pthread_key_t* key = &m_data;
-    return pthread_key_delete(*key);
+int Key::destroy() {
+  pthread_key_t* key = &m_data;
+  return pthread_key_delete(*key);
 }
 
-void* Key::getSpecific()
-{
-    pthread_key_t* key = &m_data;
-    return pthread_getspecific(*key);
+void* Key::getSpecific() {
+  pthread_key_t* key = &m_data;
+  return pthread_getspecific(*key);
 }
 
-int Key::setSpecific(void* data)
-{
-    pthread_key_t* key = &m_data;
-    return pthread_setspecific(*key, data);
+int Key::setSpecific(void* data) {
+  pthread_key_t* key = &m_data;
+  return pthread_setspecific(*key, data);
 }
 
-}
-
-
-
-
-
-
-
-
+}  // namespace pthreads
 

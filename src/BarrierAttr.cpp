@@ -29,43 +29,34 @@
 
 namespace pthreads {
 
+const Access<Barrier, PShared> B_PSHARED;
 
-const Access<Barrier,PShared>          B_PSHARED;
-
-
-
-template <>
-int Assignment<Barrier,PShared>::set( Attr<Barrier>& attr_in ) const
-{
-    pthread_barrierattr_t* attr = &(attr_in.m_data);
-    return pthread_barrierattr_setpshared( attr, mapEnum(m_value) );
+template<>
+int Assignment<Barrier, PShared>::set(Attr<Barrier>& attr_in) const {
+  pthread_barrierattr_t* attr = &(attr_in.m_data);
+  return pthread_barrierattr_setpshared(attr, mapEnum(m_value));
 }
 
-template <>
-int Access<Barrier,PShared>::get( Attr<Barrier>& attr_in, PShared& value ) const
-{
-    pthread_barrierattr_t* attr = &(attr_in.m_data);
-    int outVal;
-    int returnVal =  pthread_barrierattr_getpshared( attr, &outVal );
-    value = getEnum<PShared>(outVal);
-    return returnVal;
+template<>
+int Access<Barrier, PShared>::get(Attr<Barrier>& attr_in,
+                                  PShared& value) const {
+  pthread_barrierattr_t* attr = &(attr_in.m_data);
+  int outVal;
+  int returnVal = pthread_barrierattr_getpshared(attr, &outVal);
+  value = getEnum<PShared>(outVal);
+  return returnVal;
 }
 
-
-
-
-template <>
-int Attr<Barrier>::init()
-{
-    pthread_barrierattr_t* attr = &m_data;
-    return pthread_barrierattr_init( attr );
+template<>
+int Attr<Barrier>::init() {
+  pthread_barrierattr_t* attr = &m_data;
+  return pthread_barrierattr_init(attr);
 }
 
-template <>
-int Attr<Barrier>::destroy()
-{
-    pthread_barrierattr_t* attr = &m_data;
-    return pthread_barrierattr_destroy( attr );
+template<>
+int Attr<Barrier>::destroy() {
+  pthread_barrierattr_t* attr = &m_data;
+  return pthread_barrierattr_destroy(attr);
 }
 
 }
