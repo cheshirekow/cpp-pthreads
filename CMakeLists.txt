@@ -23,7 +23,10 @@ include_directories(include)
 enable_testing()
 add_subdirectory(src)
 add_subdirectory(include)
+add_subdirectory(gtest)
+include_directories(gtest)
 add_subdirectory(test)
+
 
 # configure the doxygen configuration
 configure_file( 

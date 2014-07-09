@@ -182,8 +182,9 @@ class Attr
         int get( const Access<Base,T>& access, U& value )
         {
             T tVal;
-            return access.get( *this, tVal );
+            int return_val = access.get( *this, tVal );
             value = tVal;
+            return return_val;
         }
 
         /// stream assignment, unsafe, ignores error values returned
