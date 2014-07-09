@@ -17,15 +17,15 @@
  *  along with cpp-pthreads.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- *  @file   include/cpp-pthreads/MutexAttr.h
+ *  @file   include/cpp-pthreads/BarrierAttr.h
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
- *  @brief  Specializations for Attr<Mutex>
+ *  @brief  Specializations for Attr<Barrier>
  */
 
-#ifndef CPP_PTHREADS_MUTEXATTR_H_
-#define CPP_PTHREADS_MUTEXATTR_H_
+#ifndef CPP_PTHREADS_BARRIERATTR_H_
+#define CPP_PTHREADS_BARRIERATTR_H_
 
 #include <pthread.h>
 
@@ -33,34 +33,21 @@
 #include <ctime>
 
 #include <cpp_pthreads/enums.h>
-#include <cpp_pthreads/Attr.h>
-#include <cpp_pthreads/Mutex.h>
+#include <cpp_pthreads/attr.h>
+#include <cpp_pthreads/barrier.h>
 
 namespace pthreads {
 
-/// A unique type which acts just like an int but is distinct in the
-/// eyes of the compiler
-typedef TypeWrap<int, 0> PriorityCeiling;
+/// provides access to the pshared field of a pthread_barrierattr_t
+extern const Access<Barrier, PShared> B_PSHARED;
 
-/// provides access to the prioceil field of a pthread_mutexattr_t
-extern const Access<Mutex, PriorityCeiling> PRIORITY_CEILING;
-
-/// provides access to the protocol field of a pthread_mutexattr_t
-extern const Access<Mutex, Protocol> PROTOCOL;
-
-/// provides access to the pshared field of a pthread_mutexattr_t
-extern const Access<Mutex, PShared> M_PSHARED;
-
-/// provides access to the type field of a pthread_mutexattr_t
-extern const Access<Mutex, Type> TYPE;
-
-/// A simple way of telling Attr<Mutex> that it's storage type
-/// is pthread_mutexattr_t
+/// A simple way of telling Attr<Barrier> that it's storage type
+/// is pthread_barrierattr_t
 template<>
-struct AttrType<Mutex> {
-  typedef pthread_mutexattr_t type;
+struct AttrType<Barrier> {
+  typedef pthread_barrierattr_t type;
 };
 
 }  // namespace pthreads
 
-#endif // MUTEXATTR_H_
+#endif // BARRIERATTR_H_

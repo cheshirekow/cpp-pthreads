@@ -1,14 +1,14 @@
 set(LIBRARY_SOURCES
-    enums.cpp
-    Barrier.cpp
-    BarrierAttr.cpp
-    Condition.cpp
-    ConditionAttr.cpp
-    Key.cpp
-    Mutex.cpp
-    MutexAttr.cpp
-    Thread.cpp
-    ThreadAttr.cpp)
+    enums.cc
+    barrier.cc
+    barrier_attr.cc
+    condition.cc
+    condition_attr.cc
+    key.cc
+    mutex.cc
+    mutex_attr.cc
+    thread.cc
+    thread_attr.cc)
 
 add_library(cpp_pthreads_static STATIC ${LIBRARY_SOURCES})
 add_library(cpp_pthreads_shared SHARED ${LIBRARY_SOURCES})

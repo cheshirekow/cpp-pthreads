@@ -24,8 +24,7 @@
  *  @brief  
  */
 
-#include <cpp_pthreads/ConditionAttr.h>
-#include <pthread.h>
+#include "cpp_pthreads/condition_attr.h"
 
 namespace pthreads {
 

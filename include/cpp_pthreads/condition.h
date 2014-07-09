@@ -29,8 +29,8 @@
 
 #include <pthread.h>
 
-#include <cpp_pthreads/Attr.h>
-#include <cpp_pthreads/Mutex.h>
+#include <cpp_pthreads/attr.h>
+#include <cpp_pthreads/mutex.h>
 
 namespace pthreads {
 

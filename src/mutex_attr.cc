@@ -24,8 +24,7 @@
  *  @brief  
  */
 
-#include <cpp_pthreads/MutexAttr.h>
-#include <pthread.h>
+#include "cpp_pthreads/mutex_attr.h"
 
 namespace pthreads {
 

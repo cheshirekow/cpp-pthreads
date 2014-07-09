@@ -24,8 +24,7 @@
  *  @brief  
  */
 
-#include <cpp_pthreads/ThreadAttr.h>
-#include <pthread.h>
+#include "cpp_pthreads/thread_attr.h"
 
 namespace pthreads {
 

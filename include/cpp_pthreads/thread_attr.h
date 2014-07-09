@@ -31,9 +31,9 @@
 
 #include <cstdarg>
 
+#include <cpp_pthreads/attr.h>
 #include <cpp_pthreads/enums.h>
-#include <cpp_pthreads/Attr.h>
-#include <cpp_pthreads/Thread.h>
+#include <cpp_pthreads/thread.h>
 
 namespace pthreads {
 

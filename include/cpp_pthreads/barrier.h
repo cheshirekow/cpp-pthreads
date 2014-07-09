@@ -28,7 +28,7 @@
 #define CPP_PTHREADS_BARRIER_H_
 
 #include <pthread.h>
-#include <cpp_pthreads/Attr.h>
+#include <cpp_pthreads/attr.h>
 
 namespace pthreads {
 

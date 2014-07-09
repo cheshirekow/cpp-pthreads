@@ -17,39 +17,35 @@
  *  along with cpp-pthreads.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- *  @file   src/Barrier.cpp
+ *  @file   src/Key.cpp
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
  *  @brief  
  */
 
-#include <pthread.h>
-
-#include <cpp_pthreads/Barrier.h>
-#include <cpp_pthreads/BarrierAttr.h>
+#include "cpp_pthreads/key.h"
 
 namespace pthreads {
 
-int Barrier::init(unsigned count) {
-  pthread_barrier_t* barrier = &m_data;
-  return pthread_barrier_init(barrier, 0, count);
+int Key::create(Destructor_t destruct) {
+  pthread_key_t* key = &m_data;
+  return pthread_key_create(key, destruct);
 }
 
-int Barrier::init(const Attr<Barrier>& attr_in, unsigned count) {
-  pthread_barrier_t* barrier = &m_data;
-  const pthread_barrierattr_t* attr = &(attr_in.m_data);
-  return pthread_barrier_init(barrier, 0, count);
+int Key::destroy() {
+  pthread_key_t* key = &m_data;
+  return pthread_key_delete(*key);
 }
 
-int Barrier::destroy() {
-  pthread_barrier_t* barrier = &m_data;
-  return pthread_barrier_destroy(barrier);
+void* Key::getSpecific() {
+  pthread_key_t* key = &m_data;
+  return pthread_getspecific(*key);
 }
 
-int Barrier::wait() {
-  pthread_barrier_t* barrier = &m_data;
-  return pthread_barrier_wait(barrier);
+int Key::setSpecific(void* data) {
+  pthread_key_t* key = &m_data;
+  return pthread_setspecific(*key, data);
 }
 
 }  // namespace pthreads

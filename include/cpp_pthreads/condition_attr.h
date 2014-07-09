@@ -17,46 +17,44 @@
  *  along with cpp-pthreads.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- *  @file   src/BarrierAttr.cpp
+ *  @file   include/cpp-pthreads/ConditionAttr.h
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
- *  @brief  
+ *  @brief  Specializations for Attr<Condition>
  */
 
-#include <cpp_pthreads/BarrierAttr.h>
+#ifndef CPP_PTHREADS_CONDITIONATTR_H_
+#define CPP_PTHREADS_CONDITIONATTR_H_
+
 #include <pthread.h>
+
+#include <cstdarg>
+#include <ctime>
+
+#include <cpp_pthreads/attr.h>
+#include <cpp_pthreads/condition.h>
+#include <cpp_pthreads/enums.h>
 
 namespace pthreads {
 
-const Access<Barrier, PShared> B_PSHARED;
+/// A unique type which acts just like clockid_t but is distinct in the
+/// eyes of the compiler
+typedef TypeWrap<clockid_t, 0> Clock;
 
+/// provides access to the clock field of a pthread_condrattr_t
+extern const Access<Condition, Clock> CLOCK;
+
+/// provides access to the pshared field of a pthread_condrattr_t
+extern const Access<Condition, PShared> C_PSHARED;
+
+/// A simple way of telling Attr<Condition> that it's storage type
+/// is pthread_condattr_t
 template<>
-int Assignment<Barrier, PShared>::set(Attr<Barrier>& attr_in) const {
-  pthread_barrierattr_t* attr = &(attr_in.m_data);
-  return pthread_barrierattr_setpshared(attr, mapEnum(m_value));
-}
-
-template<>
-int Access<Barrier, PShared>::get(Attr<Barrier>& attr_in,
-                                  PShared& value) const {
-  pthread_barrierattr_t* attr = &(attr_in.m_data);
-  int outVal;
-  int returnVal = pthread_barrierattr_getpshared(attr, &outVal);
-  value = getEnum<PShared>(outVal);
-  return returnVal;
-}
-
-template<>
-int Attr<Barrier>::init() {
-  pthread_barrierattr_t* attr = &m_data;
-  return pthread_barrierattr_init(attr);
-}
-
-template<>
-int Attr<Barrier>::destroy() {
-  pthread_barrierattr_t* attr = &m_data;
-  return pthread_barrierattr_destroy(attr);
-}
+struct AttrType<Condition> {
+  typedef pthread_condattr_t type;
+};
 
 }
+
+#endif // CONDATTR_H_

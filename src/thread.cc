@@ -24,10 +24,10 @@
  *  @brief  
  */
 
-#include <cpp_pthreads/Thread.h>
-#include <cpp_pthreads/ThreadAttr.h>
-#include <pthread.h>
 #include <signal.h>
+
+#include "cpp_pthreads/thread.h"
+#include "cpp_pthreads/thread_attr.h"
 
 namespace pthreads {
 

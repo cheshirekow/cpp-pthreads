@@ -24,10 +24,11 @@
  *  @brief  
  */
 
+#include "cpp_pthreads/enums.h"
 
-#include <cpp_pthreads/enums.h>
 #include <pthread.h>
 #include <sched.h>
+
 
 #define DEFINEMAP( name ) \
     template <> int* getEnumMap<name>(){ return name##Map; }

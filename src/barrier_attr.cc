@@ -17,44 +17,45 @@
  *  along with cpp-pthreads.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- *  @file   include/cpp-pthreads/ConditionAttr.h
+ *  @file   src/BarrierAttr.cpp
  *
  *  @date   Jan 4, 2013
  *  @author Josh Bialkowski (jbialk@mit.edu)
- *  @brief  Specializations for Attr<Condition>
+ *  @brief  
  */
 
-#ifndef CPP_PTHREADS_CONDITIONATTR_H_
-#define CPP_PTHREADS_CONDITIONATTR_H_
-
-#include <pthread.h>
-
-#include <cstdarg>
-#include <ctime>
-
-#include <cpp_pthreads/enums.h>
-#include <cpp_pthreads/Attr.h>
-#include <cpp_pthreads/Condition.h>
+#include "cpp_pthreads/barrier_attr.h"
 
 namespace pthreads {
 
-/// A unique type which acts just like clockid_t but is distinct in the
-/// eyes of the compiler
-typedef TypeWrap<clockid_t, 0> Clock;
+const Access<Barrier, PShared> B_PSHARED;
 
-/// provides access to the clock field of a pthread_condrattr_t
-extern const Access<Condition, Clock> CLOCK;
-
-/// provides access to the pshared field of a pthread_condrattr_t
-extern const Access<Condition, PShared> C_PSHARED;
-
-/// A simple way of telling Attr<Condition> that it's storage type
-/// is pthread_condattr_t
 template<>
-struct AttrType<Condition> {
-  typedef pthread_condattr_t type;
-};
-
+int Assignment<Barrier, PShared>::set(Attr<Barrier>& attr_in) const {
+  pthread_barrierattr_t* attr = &(attr_in.m_data);
+  return pthread_barrierattr_setpshared(attr, mapEnum(m_value));
 }
 
-#endif // CONDATTR_H_
+template<>
+int Access<Barrier, PShared>::get(Attr<Barrier>& attr_in,
+                                  PShared& value) const {
+  pthread_barrierattr_t* attr = &(attr_in.m_data);
+  int outVal;
+  int returnVal = pthread_barrierattr_getpshared(attr, &outVal);
+  value = getEnum<PShared>(outVal);
+  return returnVal;
+}
+
+template<>
+int Attr<Barrier>::init() {
+  pthread_barrierattr_t* attr = &m_data;
+  return pthread_barrierattr_init(attr);
+}
+
+template<>
+int Attr<Barrier>::destroy() {
+  pthread_barrierattr_t* attr = &m_data;
+  return pthread_barrierattr_destroy(attr);
+}
+
+}

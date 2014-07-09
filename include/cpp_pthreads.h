@@ -29,14 +29,14 @@
 
 #include <pthread.h>
 #include <cpp_pthreads/enums.h>
-#include <cpp_pthreads/Attr.h>
-#include <cpp_pthreads/Condition.h>
-#include <cpp_pthreads/ConditionAttr.h>
-#include <cpp_pthreads/Key.h>
-#include <cpp_pthreads/Mutex.h>
-#include <cpp_pthreads/MutexAttr.h>
-#include <cpp_pthreads/Thread.h>
-#include <cpp_pthreads/ThreadAttr.h>
+#include <cpp_pthreads/attr.h>
+#include <cpp_pthreads/condition.h>
+#include <cpp_pthreads/condition_attr.h>
+#include <cpp_pthreads/key.h>
+#include <cpp_pthreads/mutex.h>
+#include <cpp_pthreads/mutex_attr.h>
+#include <cpp_pthreads/thread.h>
+#include <cpp_pthreads/thread_attr.h>
 
 /// Wraps posix-threads (pthreads.h) with object oriented API
 namespace pthreads{}
